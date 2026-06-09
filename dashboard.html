@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三菱地所ハウスネット × CyberACE | FY2026 広告ロードマップ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F2544;
+  --blue: #1A4A8A;
+  --blue-light: #2A6ACA;
+  --gold: #C8892A;
+  --gold-light: #E8A94A;
+  --teal: #0F6E56;
+  --teal-light: #1A9070;
+  --red: #C0392B;
+  --amber: #E67E22;
+  --green: #27AE60;
+  --gray-100: #F8F9FA;
+  --gray-200: #E9ECEF;
+  --gray-300: #DEE2E6;
+  --gray-400: #CED4DA;
+  --gray-500: #ADB5BD;
+  --gray-600: #6C757D;
+  --gray-700: #495057;
+  --gray-800: #343A40;
+  --gray-900: #212529;
+  --white: #FFFFFF;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow: 0 2px 8px rgba(0,0,0,0.1);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,0.15);
+  --radius: 8px;
+  --radius-lg: 12px;
+  --media-google: #4285F4;
+  --media-pmax: #34A853;
+  --media-yahoo: #FF0033;
+  --media-microsoft: #00A4EF;
+  --media-gdn: #FBBC04;
+  --media-yda: #FF6900;
+  --media-meta: #1877F2;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'HiraginoKaku Gothic ProN', Arial, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-900);
+  font-size: 14px;
+  line-height: 1.6;
+}
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  color: var(--white);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  box-shadow: var(--shadow-lg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-left { display: flex; align-items: center; gap: 16px; }
+.header-logo {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+}
+.header-logo span { color: var(--gold-light); }
+.header-divider { width: 1px; height: 30px; background: rgba(255,255,255,0.3); }
+.header-title { font-size: 15px; font-weight: 700; letter-spacing: 0.03em; }
+.header-badge {
+  background: var(--gold);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+.header-right { display: flex; align-items: center; gap: 12px; font-size: 12px; color: rgba(255,255,255,0.8); }
+.header-date { font-weight: 500; }
+.btn-reset {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: var(--white);
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+.btn-reset:hover { background: rgba(255,255,255,0.25); }
+
+/* Tabs */
+.tabs-nav {
+  background: var(--white);
+  border-bottom: 2px solid var(--gray-200);
+  padding: 0 24px;
+  display: flex;
+  gap: 0;
+  position: sticky;
+  top: 60px;
+  z-index: 90;
+  box-shadow: var(--shadow-sm);
+}
+.tab-btn {
+  padding: 14px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-600);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--blue); }
+.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 700; }
+
+/* Tab Panels */
+.tab-panel { display: none; padding: 24px; min-height: calc(100vh - 120px); }
+.tab-panel.active { display: block; }
+
+/* KPI Cards */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--blue);
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(26,74,138,0.05);
+}
+.kpi-card.gold { border-top-color: var(--gold); }
+.kpi-card.teal { border-top-color: var(--teal); }
+.kpi-card.red { border-top-color: var(--red); }
+.kpi-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gray-600);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.kpi-value {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--navy);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.kpi-sub { font-size: 11px; color: var(--gray-500); }
+.kpi-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.kpi-badge.green { background: #D5F5E3; color: var(--green); }
+.kpi-badge.amber { background: #FDEBD0; color: var(--amber); }
+.kpi-badge.red { background: #FADBD8; color: var(--red); }
+
+/* Section headers */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 18px;
+  background: var(--blue);
+  border-radius: 2px;
+}
+
+/* Charts */
+.chart-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+.chart-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+svg text { font-family: 'Noto Sans JP', Arial, sans-serif; }
+
+/* Grid 2-col */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+/* Alerts */
+.alert-list { display: flex; flex-direction: column; gap: 10px; }
+.alert-item {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--red);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.alert-item.amber { border-left-color: var(--amber); }
+.alert-item.blue { border-left-color: var(--blue); }
+.alert-icon { font-size: 18px; line-height: 1; margin-top: 1px; }
+.alert-content { flex: 1; }
+.alert-title { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 2px; }
+.alert-desc { font-size: 12px; color: var(--gray-600); }
+
+/* Spotlight card */
+.spotlight-card {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+}
+.spotlight-title { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; opacity: 0.8; margin-bottom: 16px; }
+.spotlight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.spotlight-item { text-align: center; }
+.spotlight-label { font-size: 11px; opacity: 0.7; margin-bottom: 4px; }
+.spotlight-value { font-size: 22px; font-weight: 900; }
+.spotlight-sub { font-size: 10px; opacity: 0.6; margin-top: 2px; }
+
+/* Month selector */
+.month-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.month-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--gray-300);
+  background: var(--white);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all 0.2s;
+  color: var(--gray-700);
+}
+.month-pill:hover { border-color: var(--blue); color: var(--blue); }
+.month-pill.active { background: var(--blue); border-color: var(--blue); color: var(--white); font-weight: 700; }
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.data-table th {
+  background: var(--navy);
+  color: var(--white);
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.data-table th:first-child { border-radius: 0; }
+.data-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--gray-200);
+  vertical-align: middle;
+}
+.data-table tr:hover td { background: var(--gray-100); }
+.data-table tr:last-child td { border-bottom: none; }
+.media-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+input.actual-input {
+  width: 120px;
+  padding: 5px 8px;
+  border: 1px solid var(--gray-300);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 12px;
+  text-align: right;
+}
+input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 2px rgba(26,74,138,0.15); }
+
+/* Progress bar */
+.progress-bar-wrap {
+  width: 120px;
+  height: 8px;
+  background: var(--gray-200);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+.progress-bar-fill.green { background: var(--green); }
+.progress-bar-fill.amber { background: var(--amber); }
+.progress-bar-fill.red { background: var(--red); }
+.achievement-pct { font-size: 12px; font-weight: 700; margin-left: 8px; }
+.achievement-pct.green { color: var(--green); }
+.achievement-pct.amber { color: var(--amber); }
+.achievement-pct.red { color: var(--red); }
+
+/* Toggle */
+.view-toggle {
+  display: flex;
+  background: var(--gray-200);
+  border-radius: 6px;
+  padding: 3px;
+  gap: 2px;
+}
+.toggle-btn {
+  padding: 5px 16px;
+  border: none;
+  background: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-600);
+  transition: all 0.2s;
+}
+.toggle-btn.active { background: var(--white); color: var(--navy); font-weight: 700; box-shadow: var(--shadow-sm); }
+
+/* Save button */
+.btn-primary {
+  background: var(--blue);
+  color: var(--white);
+  border: none;
+  padding: 9px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--navy); }
+.btn-secondary {
+  background: var(--white);
+  color: var(--blue);
+  border: 1px solid var(--blue);
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { background: var(--blue); color: var(--white); }
+.btn-danger {
+  background: var(--white);
+  color: var(--red);
+  border: 1px solid var(--red);
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-danger:hover { background: var(--red); color: var(--white); }
+.btn-sm {
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-sm.blue { background: var(--blue-light); color: var(--white); }
+.btn-sm.blue:hover { background: var(--navy); }
+
+/* Status badges */
+.status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.status-緊急対応 { background: #FADBD8; color: #922B21; }
+.status-進行中 { background: #D6EAF8; color: #1A5276; }
+.status-準備中 { background: #FEF9E7; color: #7D6608; }
+.status-計画中 { background: #E8F8F5; color: #1E8449; }
+.status-保留 { background: #F2F3F4; color: #5D6D7E; }
+.status-完了 { background: #D5F5E3; color: #1E8449; }
+
+/* Tactic cards */
+.tactic-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.filter-btn {
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--gray-300);
+  background: var(--white);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--gray-700);
+  transition: all 0.2s;
+}
+.filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+.filter-btn.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+
+.tactics-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.tactic-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  border-top: 3px solid var(--blue);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.tactic-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.tactic-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+.tactic-no { font-size: 10px; font-weight: 700; color: var(--gray-500); letter-spacing: 0.08em; }
+.tactic-name { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.tactic-media-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.tactic-detail { font-size: 12px; color: var(--gray-600); line-height: 1.5; margin-bottom: 10px; }
+.tactic-meta { display: flex; gap: 12px; font-size: 11px; color: var(--gray-500); margin-bottom: 10px; flex-wrap: wrap; }
+.tactic-meta span { display: flex; align-items: center; gap: 4px; }
+.tactic-kpi {
+  background: var(--gray-100);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: var(--gray-700);
+  margin-bottom: 10px;
+}
+.tactic-kpi strong { color: var(--teal); }
+.tactic-actions { display: flex; gap: 6px; justify-content: flex-end; }
+.tactic-notes {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--gray-300);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 11px;
+  resize: vertical;
+  min-height: 50px;
+  color: var(--gray-700);
+  margin-bottom: 8px;
+}
+.tactic-notes:focus { outline: none; border-color: var(--blue); }
+
+/* Media tabs */
+.media-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--gray-200);
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+.media-tab-btn {
+  padding: 10px 18px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-600);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.media-tab-btn:hover { color: var(--blue); }
+.media-tab-btn.active { font-weight: 700; border-bottom-color: currentColor; }
+
+/* Roadmap */
+.roadmap-container { overflow-x: auto; }
+.roadmap-grid {
+  min-width: 900px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.roadmap-header {
+  display: grid;
+  grid-template-columns: 130px repeat(12, 1fr);
+  background: var(--navy);
+  color: var(--white);
+}
+.roadmap-header-cell {
+  padding: 10px 6px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.roadmap-row {
+  display: grid;
+  grid-template-columns: 130px repeat(12, 1fr);
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  align-items: center;
+}
+.roadmap-row:hover { background: var(--gray-100); }
+.roadmap-row-label {
+  padding: 12px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--navy);
+  border-right: 2px solid var(--gray-300);
+  background: var(--gray-100);
+}
+.roadmap-cell {
+  padding: 8px 4px;
+  text-align: center;
+  border-right: 1px solid var(--gray-200);
+  font-size: 14px;
+  cursor: help;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+.season-row {
+  display: grid;
+  grid-template-columns: 130px repeat(12, 1fr);
+  border-bottom: 2px solid var(--navy);
+}
+.season-cell {
+  padding: 6px 8px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.roadmap-category-header {
+  display: grid;
+  grid-template-columns: 130px repeat(12, 1fr);
+  background: var(--blue);
+  color: var(--white);
+}
+.roadmap-category-label {
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  width: 520px;
+  max-width: 95vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.2s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(-16px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 12px; font-weight: 700; color: var(--gray-700); margin-bottom: 6px; letter-spacing: 0.04em; }
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--gray-800);
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(26,74,138,0.1);
+}
+.form-textarea { resize: vertical; min-height: 80px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--gray-200); }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--navy);
+  color: var(--white);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  z-index: 2000;
+  animation: toastIn 0.3s ease;
+  display: none;
+}
+.toast.show { display: block; }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Legend */
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--gray-600); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.legend-rect { width: 14px; height: 10px; border-radius: 2px; display: inline-block; }
+
+/* Insight card */
+.insight-card {
+  background: linear-gradient(135deg, #EBF3FB, #D6EAF8);
+  border: 1px solid #AED6F1;
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.insight-title { font-size: 12px; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
+.insight-list { list-style: none; }
+.insight-list li { font-size: 12px; color: var(--gray-700); padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; }
+.insight-list li::before { content: '▸'; color: var(--blue); font-size: 10px; margin-top: 2px; flex-shrink: 0; }
+
+/* Misc */
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.flex { display: flex; align-items: center; gap: 8px; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.mt-4 { margin-top: 16px; }
+.mt-6 { margin-top: 24px; }
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.last-updated { font-size: 11px; color: var(--gray-500); }
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--gray-500);
+  font-size: 14px;
+}
+.sparkline-wrap { display: flex; align-items: center; gap: 8px; }
+.table-wrap { overflow-x: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+
+@media print {
+  .header, .tabs-nav { position: static; }
+  .tab-panel { display: block !important; break-after: page; }
+  .btn-primary, .btn-secondary, .btn-reset, .tactic-actions { display: none; }
+  body { background: white; }
+}
+@media (max-width: 1024px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+  .header-title { display: none; }
+  .tab-btn { padding: 12px 12px; font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-left">
+    <div class="header-logo">
+      <span>三菱地所ハウスネット</span><br>
+      × CyberACE
+    </div>
+    <div class="header-divider"></div>
+    <div class="header-title">FY2026 広告ロードマップ</div>
+    <div class="header-badge">2026年度</div>
+  </div>
+  <div class="header-right">
+    <span class="header-date" id="headerDate"></span>
+    <button class="btn-reset" onclick="resetData()">データをリセット</button>
+  </div>
+</header>
+
+<!-- Tabs -->
+<nav class="tabs-nav">
+  <button class="tab-btn active" onclick="showTab('dashboard')">📊 ダッシュボード</button>
+  <button class="tab-btn" onclick="showTab('yojitsu')">📈 予実管理</button>
+  <button class="tab-btn" onclick="showTab('tactics')">📋 施策管理</button>
+  <button class="tab-btn" onclick="showTab('media')">📡 媒体別詳細</button>
+  <button class="tab-btn" onclick="showTab('roadmap')">🗓 ロードマップ</button>
+</nav>
+
+<!-- ===== TAB 1: DASHBOARD ===== -->
+<div id="tab-dashboard" class="tab-panel active">
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">年間予算</div>
+      <div class="kpi-value">¥874.8M</div>
+      <div class="kpi-sub">全媒体合計 FY2026</div>
+      <div class="kpi-badge green" id="kpi-digest-badge">消化率 — %</div>
+    </div>
+    <div class="kpi-card gold">
+      <div class="kpi-label">年間目標反響</div>
+      <div class="kpi-value">5,851件</div>
+      <div class="kpi-sub">CV合計 FY2026</div>
+      <div class="kpi-badge amber" id="kpi-cv-badge">達成率 — %</div>
+    </div>
+    <div class="kpi-card teal">
+      <div class="kpi-label">年間目標CPA</div>
+      <div class="kpi-value" id="kpi-cpa">¥—</div>
+      <div class="kpi-sub">実績CPA（累計）</div>
+      <div class="kpi-badge green" id="kpi-cpa-badge">目標 ¥149,513</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label">緊急対応施策</div>
+      <div class="kpi-value" id="kpi-urgent">3件</div>
+      <div class="kpi-sub">要即対応アクション</div>
+      <div class="kpi-badge red">要対応</div>
+    </div>
+  </div>
+
+  <div class="grid-2 mb-6">
+    <!-- Monthly chart -->
+    <div class="chart-card">
+      <div class="flex-between mb-4">
+        <div class="chart-title">月次予算推移（全媒体）</div>
+        <div class="legend" id="legend-monthly"></div>
+      </div>
+      <svg id="chart-monthly" width="100%" height="200" viewBox="0 0 560 200"></svg>
+    </div>
+    <!-- Spotlight -->
+    <div>
+      <div class="spotlight-card mb-4" id="spotlight-card">
+        <div class="spotlight-title" id="spotlight-title">TODAY'S FOCUS</div>
+        <div class="spotlight-grid" id="spotlight-grid"></div>
+      </div>
+      <div class="chart-card" style="padding: 16px 20px;">
+        <div class="chart-title">媒体別予算配分</div>
+        <svg id="chart-donut" width="100%" height="140" viewBox="0 0 300 140"></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- CV Monthly chart -->
+  <div class="chart-card mb-6">
+    <div class="flex-between mb-4">
+      <div class="chart-title">月次反響数推移（目標）</div>
+      <div class="legend" id="legend-cv"></div>
+    </div>
+    <svg id="chart-cv-monthly" width="100%" height="180" viewBox="0 0 900 180"></svg>
+  </div>
+
+  <!-- Alerts -->
+  <div class="section-header">
+    <div class="section-title">緊急対応 / 要注目アラート</div>
+  </div>
+  <div class="alert-list" id="alert-list"></div>
+</div>
+
+<!-- ===== TAB 2: 予実管理 ===== -->
+<div id="tab-yojitsu" class="tab-panel">
+  <div class="flex-between mb-4">
+    <div class="flex">
+      <div class="view-toggle">
+        <button class="toggle-btn active" id="toggle-monthly-btn" onclick="setYojitsuView('monthly')">月次</button>
+        <button class="toggle-btn" id="toggle-cumul-btn" onclick="setYojitsuView('cumulative')">累計</button>
+      </div>
+    </div>
+    <div class="flex">
+      <span class="last-updated" id="last-updated-text"></span>
+      <button class="btn-primary" onclick="saveActuals()">実績を保存</button>
+    </div>
+  </div>
+  <div class="month-pills" id="month-pills"></div>
+  <div class="table-wrap">
+    <table class="data-table" id="yojitsu-table">
+      <thead>
+        <tr>
+          <th>媒体</th>
+          <th class="text-right">予算目標</th>
+          <th class="text-right">実績予算</th>
+          <th class="text-right">反響目標</th>
+          <th class="text-right">実績反響</th>
+          <th class="text-right">目標CPA</th>
+          <th class="text-right">実績CPA</th>
+          <th>達成率（反響）</th>
+        </tr>
+      </thead>
+      <tbody id="yojitsu-tbody"></tbody>
+      <tfoot id="yojitsu-tfoot"></tfoot>
+    </table>
+  </div>
+  <div class="chart-card mt-6">
+    <div class="chart-title" id="yojitsu-chart-title">月次達成率チャート</div>
+    <svg id="chart-yojitsu" width="100%" height="180" viewBox="0 0 560 180"></svg>
+  </div>
+</div>
+
+<!-- ===== TAB 3: 施策管理 ===== -->
+<div id="tab-tactics" class="tab-panel">
+  <div class="flex-between mb-4">
+    <div class="flex" style="gap:16px; flex-wrap:wrap;">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--gray-600);margin-bottom:6px;">媒体フィルター</div>
+        <div class="tactic-filters" id="media-filter-btns"></div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--gray-600);margin-bottom:6px;">ステータスフィルター</div>
+        <div class="tactic-filters" id="status-filter-btns"></div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="openAddTacticModal()">＋ 施策を追加</button>
+  </div>
+  <div class="tactics-board" id="tactics-board"></div>
+</div>
+
+<!-- ===== TAB 4: 媒体別詳細 ===== -->
+<div id="tab-media" class="tab-panel">
+  <div class="media-tabs" id="media-tabs"></div>
+  <div id="media-detail-content"></div>
+</div>
+
+<!-- ===== TAB 5: ROADMAP ===== -->
+<div id="tab-roadmap" class="tab-panel">
+  <div class="chart-card mb-4">
+    <div class="flex-between mb-4">
+      <div class="chart-title">FY2026 施策ロードマップ（4月〜3月）</div>
+      <div class="legend">
+        <div class="legend-item"><span style="font-size:14px;">●</span> 継続実施</div>
+        <div class="legend-item"><span style="font-size:14px;">▲</span> 新規開始</div>
+        <div class="legend-item"><span style="font-size:14px;">◉</span> 調査・分析</div>
+        <div class="legend-item"><span style="font-size:14px;">◇</span> 要件確認中</div>
+      </div>
+    </div>
+    <div class="roadmap-container">
+      <div id="roadmap-table"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Add/Edit Tactic -->
+<div class="modal-overlay" id="tactic-modal">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">施策を追加</div>
+    <div class="form-group">
+      <label class="form-label">施策No.</label>
+      <input type="text" class="form-input" id="m-no" placeholder="例: SEM-5">
+    </div>
+    <div class="form-group">
+      <label class="form-label">媒体</label>
+      <select class="form-select" id="m-media">
+        <option>Google検索</option>
+        <option>P-MAX</option>
+        <option>Yahoo!検索</option>
+        <option>Microsoft</option>
+        <option>GDN</option>
+        <option>YDA</option>
+        <option>Meta</option>
+        <option>全媒体</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">施策名</label>
+      <input type="text" class="form-input" id="m-name" placeholder="施策名を入力">
+    </div>
+    <div class="form-group">
+      <label class="form-label">詳細</label>
+      <textarea class="form-textarea" id="m-detail" placeholder="施策の詳細を入力"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">実施時期</label>
+      <input type="text" class="form-input" id="m-timing" placeholder="例: 2026/6〜通期">
+    </div>
+    <div class="form-group">
+      <label class="form-label">KPI</label>
+      <input type="text" class="form-input" id="m-kpi" placeholder="例: CTR+10%改善">
+    </div>
+    <div class="form-group">
+      <label class="form-label">ステータス</label>
+      <select class="form-select" id="m-status">
+        <option>緊急対応</option>
+        <option>進行中</option>
+        <option>準備中</option>
+        <option>計画中</option>
+        <option>保留</option>
+        <option>完了</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メモ</label>
+      <textarea class="form-textarea" id="m-notes" placeholder="追記メモ（任意）" style="min-height:60px;"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('tactic-modal')">キャンセル</button>
+      <button class="btn-primary" onclick="saveTactic()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const MONTHS = ['4月','5月','6月','7月','8月','9月','10月','11月','12月','1月','2月','3月'];
+const MONTHS_FULL = ['2026/4','2026/5','2026/6','2026/7','2026/8','2026/9','2026/10','2026/11','2026/12','2027/1','2027/2','2027/3'];
+
+const BUDGETS = {
+  'Google検索':[33380000,36570000,26700000,37350000,32770000,35150000,34000000,28000000,21690000,41750000,37530000,34770000],
+  'P-MAX':     [10930000,20530000,22670000,13400000,12380000,14600000,13100000,14750000,12660000,15050000,15900000,15800000],
+  'Yahoo!検索':[6300000,6500000,6700000,6500000,6500000,7000000,6800000,6700000,6600000,8000000,8200000,8000000],
+  'Microsoft': [1900000,2400000,3400000,1400000,1400000,1400000,1400000,1400000,1400000,1400000,1400000,1400000],
+  'GDN':       [1440000,1500000,1530000,1500000,1500000,1600000,1800000,1700000,1700000,2100000,2150000,2080000],
+  'YDA':       [500000,500000,500000,500000,500000,600000,500000,500000,500000,650000,650000,650000],
+  'Meta':      [12500000,8700000,8000000,15000000,14000000,13500000,17000000,16150000,14000000,16000000,12970000,14300000],
+};
+const CVS_TARGET = {
+  'Google検索':[212,232,177,236,204,219,217,175,145,273,237,225],
+  'P-MAX':     [71,84,89,97,78,101,90,98,84,102,106,105],
+  'Yahoo!検索':[49,51,52,51,51,55,53,52,51,62,62,51],
+  'Microsoft': [11,11,11,11,11,11,11,11,11,11,11,11],
+  'GDN':       [10,10,10,10,10,11,12,11,11,14,14,14],
+  'YDA':       [4,4,4,4,4,5,4,4,4,5,5,4],
+  'Meta':      [88,122,120,99,105,90,112,109,95,107,88,99],
+};
+const MEDIA_LIST = Object.keys(BUDGETS);
+const MEDIA_COLORS = {
+  'Google検索':'#4285F4','P-MAX':'#34A853','Yahoo!検索':'#FF0033',
+  'Microsoft':'#00A4EF','GDN':'#FBBC04','YDA':'#FF6900','Meta':'#1877F2'
+};
+
+// Annual totals
+const TOTAL_BUDGET = MEDIA_LIST.reduce((s,m)=>s+BUDGETS[m].reduce((a,b)=>a+b,0),0);
+const TOTAL_CV = MEDIA_LIST.reduce((s,m)=>s+CVS_TARGET[m].reduce((a,b)=>a+b,0),0);
+const TARGET_CPA = TOTAL_BUDGET/TOTAL_CV;
+
+// Default tactics
+const DEFAULT_TACTICS = [
+  {no:'SEM-1',media:'Google検索',name:'CPC急騰対策',detail:'「不動産 査定」CPC5月¥10,311（+72%MoM）。マッチタイプ見直し・除外KW追加・入札調整',timing:'2026/6〜通期',kpi:'CPC¥5,000以下',status:'緊急対応',notes:''},
+  {no:'SEM-2',media:'Google検索',name:'極TD：CTR改善検証',detail:'AI生成TDで広告文最適化。CTR改善→実質CPC低減',timing:'2026/4〜通期',kpi:'CTR+10%改善',status:'進行中',notes:''},
+  {no:'SEM-3',media:'Google検索',name:'極LP：CVR改善検証',detail:'LP最適化でCVR改善。GA4中間KPIと連動',timing:'2026/6〜',kpi:'CVR+15%改善',status:'準備中',notes:''},
+  {no:'SEM-4',media:'P-MAX',name:'検索テーマ精度向上',detail:'売却意向高クエリに絞った検索テーマ。Asset Group細分化',timing:'2026/4〜通期',kpi:'CPA¥145K以内',status:'進行中',notes:''},
+  {no:'Meta-1',media:'Meta',name:'時間帯最適化',detail:'深夜0〜4時カット→朝シフト。火・日曜引き締め',timing:'2026/6〜',kpi:'新規リーチ率60%以上',status:'緊急対応',notes:''},
+  {no:'Meta-2',media:'Meta',name:'クリエイティブABテスト',detail:'コピー固定×人物変数（女性/夫婦/定年前）3種',timing:'2026/6〜8月',kpi:'CTR+15% / CVR+10%',status:'準備中',notes:''},
+  {no:'Meta-3',media:'Meta',name:'背景・根拠変数テスト',detail:'室内背景・価格推移グラフ追加テスト',timing:'2026/7〜9月',kpi:'CVR改善確認',status:'計画中',notes:''},
+  {no:'Meta-4',media:'Meta',name:'DDA再検証（下期）',detail:'Meta版DDA別アプローチ。中止基準事前合意',timing:'2026/10〜',kpi:'要件定義後決定',status:'保留',notes:''},
+  {no:'Display-1',media:'GDN',name:'GA4中間KPI発掘',detail:'問い合わせユーザーの回遊行動分析。中間KPI定義',timing:'2026/6〜9月',kpi:'中間KPI定義完了',status:'進行中',notes:''},
+  {no:'PDCA-1',media:'全媒体',name:'月次報告フォーマット刷新',detail:'「数・単価・質」3軸を月次報告フレームに追加',timing:'2026/6〜',kpi:'顧客満足度改善',status:'緊急対応',notes:''},
+  {no:'PDCA-2',media:'全媒体',name:'マクロミル調査3回実施',detail:'認知率・TOM・検討意向を競合比較でトラッキング',timing:'4月/9月/3月',kpi:'認知率+5pt改善',status:'計画中',notes:''},
+];
+
+// ============================================================
+// STATE / STORAGE
+// ============================================================
+const STORAGE_KEY = 'mjhn_fy2026_actuals';
+const TACTICS_KEY = 'mjhn_fy2026_tactics';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveState(s) { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+function loadTactics() {
+  try {
+    const t = JSON.parse(localStorage.getItem(TACTICS_KEY));
+    return t && t.length ? t : JSON.parse(JSON.stringify(DEFAULT_TACTICS));
+  } catch(e) { return JSON.parse(JSON.stringify(DEFAULT_TACTICS)); }
+}
+function saveTacticsState(t) { localStorage.setItem(TACTICS_KEY, JSON.stringify(t)); }
+
+let state = loadState();
+let tactics = loadTactics();
+let currentMonth = 0; // April=0
+let yojitsuView = 'monthly';
+let editingTacticIdx = null;
+let mediaFilterActive = '全媒体';
+let statusFilterActive = '全て';
+let activeMediaTab = 'Google検索';
+
+// ============================================================
+// UTILS
+// ============================================================
+function fmt(n) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  return Math.round(n).toLocaleString('ja-JP');
+}
+function fmtM(n) {
+  if (!n) return '—';
+  if (n >= 1000000) return '¥' + (n/1000000).toFixed(1) + 'M';
+  return '¥' + fmt(n);
+}
+function fmtPct(n) {
+  if (!n || isNaN(n)) return '—%';
+  return n.toFixed(1) + '%';
+}
+function achClass(pct) {
+  if (!pct || isNaN(pct)) return '';
+  if (pct >= 100) return 'green';
+  if (pct >= 80) return 'amber';
+  return 'red';
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Current FY month: Apr2026=0, Mar2027=11
+function getCurrentFYMonth() {
+  const now = new Date('2026-06-09'); // use provided date
+  const m = now.getMonth(); // 0=Jan
+  if (m >= 3) return m - 3;
+  return m + 9;
+}
+
+// ============================================================
+// HEADER / INIT
+// ============================================================
+function initHeader() {
+  document.getElementById('headerDate').textContent = '2026年6月9日（月）';
+  const fyM = getCurrentFYMonth();
+  // update urgent count
+  const urgent = tactics.filter(t=>t.status==='緊急対応').length;
+  document.getElementById('kpi-urgent').textContent = urgent + '件';
+}
+
+// ============================================================
+// TAB NAVIGATION
+// ============================================================
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  const btns = document.querySelectorAll('.tab-btn');
+  const names = ['dashboard','yojitsu','tactics','media','roadmap'];
+  btns[names.indexOf(id)].classList.add('active');
+  if (id==='yojitsu') renderYojitsu();
+  if (id==='tactics') renderTactics();
+  if (id==='media') renderMediaDetail();
+  if (id==='roadmap') renderRoadmap();
+}
+
+// ============================================================
+// SVG HELPERS
+// ============================================================
+function svgEl(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  Object.entries(attrs||{}).forEach(([k,v])=>el.setAttribute(k,v));
+  return el;
+}
+
+// ============================================================
+// TAB 1: DASHBOARD
+// ============================================================
+function renderDashboard() {
+  renderKPIs();
+  renderMonthlyBudgetChart();
+  renderSpotlight();
+  renderDonutChart();
+  renderCVChart();
+  renderAlerts();
+}
+
+function renderKPIs() {
+  // Calculate actuals from state
+  let totalActualBudget = 0, totalActualCV = 0;
+  for (let mi=0; mi<12; mi++) {
+    MEDIA_LIST.forEach(m => {
+      const key = `${m}_${mi}`;
+      if (state[key]) {
+        totalActualBudget += Number(state[key].budget||0);
+        totalActualCV += Number(state[key].cv||0);
+      }
+    });
+  }
+  const digestPct = totalActualBudget > 0 ? (totalActualBudget/TOTAL_BUDGET*100) : null;
+  const cvPct = totalActualCV > 0 ? (totalActualCV/TOTAL_CV*100) : null;
+  const actualCPA = totalActualCV > 0 ? totalActualBudget/totalActualCV : null;
+
+  const digestBadge = document.getElementById('kpi-digest-badge');
+  if (digestPct) {
+    digestBadge.textContent = '消化率 ' + fmtPct(digestPct);
+    digestBadge.className = 'kpi-badge ' + achClass(digestPct);
+  } else {
+    digestBadge.textContent = '実績入力待ち';
+    digestBadge.className = 'kpi-badge amber';
+  }
+
+  const cvBadge = document.getElementById('kpi-cv-badge');
+  if (cvPct) {
+    cvBadge.textContent = '達成率 ' + fmtPct(cvPct);
+    cvBadge.className = 'kpi-badge ' + achClass(cvPct);
+  } else {
+    cvBadge.textContent = '実績入力待ち';
+    cvBadge.className = 'kpi-badge amber';
+  }
+
+  document.getElementById('kpi-cpa').textContent = actualCPA ? '¥' + fmt(actualCPA) : '¥—';
+}
+
+function renderMonthlyBudgetChart() {
+  const svg = document.getElementById('chart-monthly');
+  svg.innerHTML = '';
+  const W=560, H=200, PAD={top:20,right:20,bottom:30,left:60};
+  const cw = W-PAD.left-PAD.right;
+  const ch = H-PAD.top-PAD.bottom;
+
+  // monthly totals
+  const totals = MONTHS.map((_,mi)=>MEDIA_LIST.reduce((s,m)=>s+BUDGETS[m][mi],0));
+  const maxVal = Math.max(...totals)*1.1;
+
+  const barW = cw/12;
+  // Y grid
+  for (let i=0;i<=4;i++) {
+    const y = PAD.top + ch*(1-i/4);
+    const line = svgEl('line',{x1:PAD.left,y1:y,x2:W-PAD.right,y2:y,stroke:'#DEE2E6','stroke-width':'1'});
+    svg.appendChild(line);
+    const label = svgEl('text',{x:PAD.left-6,y:y+4,'text-anchor':'end','font-size':'9',fill:'#6C757D'});
+    label.textContent = (maxVal/1000000*i/4).toFixed(0)+'M';
+    svg.appendChild(label);
+  }
+
+  const fyM = getCurrentFYMonth();
+
+  MONTHS.forEach((_,mi) => {
+    let yOff = PAD.top + ch;
+    const x = PAD.left + mi*barW + barW*0.1;
+    const bw = barW*0.8;
+
+    MEDIA_LIST.forEach(m => {
+      const val = BUDGETS[m][mi];
+      const bh = (val/maxVal)*ch;
+      yOff -= bh;
+      const rect = svgEl('rect',{x:x,y:yOff,width:bw,height:bh,fill:MEDIA_COLORS[m],opacity:mi===fyM?'1':'0.75'});
+      // tooltip
+      rect.innerHTML = `<title>${m}: ¥${fmt(val)}</title>`;
+      svg.appendChild(rect);
+    });
+
+    // current month indicator
+    if (mi === fyM) {
+      const ind = svgEl('rect',{x:x-barW*0.05,y:PAD.top,width:bw+barW*0.1,height:ch,'fill':'rgba(200,137,42,0.08)',rx:'3'});
+      svg.insertBefore(ind, svg.firstChild);
+    }
+
+    // x label
+    const lbl = svgEl('text',{x:x+bw/2,y:H-PAD.bottom+14,'text-anchor':'middle','font-size':'9',fill:mi===fyM?'#C8892A':'#6C757D','font-weight':mi===fyM?'700':'400'});
+    lbl.textContent = MONTHS[mi];
+    svg.appendChild(lbl);
+  });
+
+  // Legend
+  const legEl = document.getElementById('legend-monthly');
+  legEl.innerHTML = MEDIA_LIST.map(m=>`<div class="legend-item"><span class="legend-rect" style="background:${MEDIA_COLORS[m]}"></span>${m}</div>`).join('');
+}
+
+function renderSpotlight() {
+  const fyM = getCurrentFYMonth();
+  const mName = MONTHS[fyM];
+  document.getElementById('spotlight-title').textContent = `現在 FY2026 第${fyM+1}月 — ${mName}のフォーカス`;
+
+  const monthBudget = MEDIA_LIST.reduce((s,m)=>s+BUDGETS[m][fyM],0);
+  const monthCV = MEDIA_LIST.reduce((s,m)=>s+CVS_TARGET[m][fyM],0);
+  const monthCPA = monthBudget/monthCV;
+
+  document.getElementById('spotlight-grid').innerHTML = `
+    <div class="spotlight-item">
+      <div class="spotlight-label">今月予算</div>
+      <div class="spotlight-value">${fmtM(monthBudget)}</div>
+      <div class="spotlight-sub">全媒体合計</div>
+    </div>
+    <div class="spotlight-item">
+      <div class="spotlight-label">今月目標反響</div>
+      <div class="spotlight-value">${monthCV}件</div>
+      <div class="spotlight-sub">全媒体合計</div>
+    </div>
+    <div class="spotlight-item">
+      <div class="spotlight-label">今月目標CPA</div>
+      <div class="spotlight-value">¥${fmt(monthCPA)}</div>
+      <div class="spotlight-sub">目標単価</div>
+    </div>
+  `;
+}
+
+function renderDonutChart() {
+  const svg = document.getElementById('chart-donut');
+  svg.innerHTML = '';
+  const cx=90, cy=70, r=55, ir=35;
+  let total = MEDIA_LIST.reduce((s,m)=>s+BUDGETS[m].reduce((a,b)=>a+b,0),0);
+  let angle = -Math.PI/2;
+
+  MEDIA_LIST.forEach(m => {
+    const val = BUDGETS[m].reduce((a,b)=>a+b,0);
+    const sweep = (val/total)*Math.PI*2;
+    const x1=cx+Math.cos(angle)*r, y1=cy+Math.sin(angle)*r;
+    const x2=cx+Math.cos(angle+sweep)*r, y2=cy+Math.sin(angle+sweep)*r;
+    const xi1=cx+Math.cos(angle)*ir, yi1=cy+Math.sin(angle)*ir;
+    const xi2=cx+Math.cos(angle+sweep)*ir, yi2=cy+Math.sin(angle+sweep)*ir;
+    const large=sweep>Math.PI?1:0;
+    const path=svgEl('path',{
+      d:`M${xi1},${yi1} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} L${xi2},${yi2} A${ir},${ir} 0 ${large},0 ${xi1},${yi1}`,
+      fill:MEDIA_COLORS[m],opacity:'0.9'
+    });
+    path.innerHTML=`<title>${m}: ¥${fmt(val/1000000)}M (${(val/total*100).toFixed(1)}%)</title>`;
+    svg.appendChild(path);
+    angle+=sweep;
+  });
+
+  // center text
+  const ct = svgEl('text',{x:cx,y:cy-6,'text-anchor':'middle','font-size':'11','font-weight':'700',fill:'#0F2544'});
+  ct.textContent = '年間';
+  svg.appendChild(ct);
+  const ct2 = svgEl('text',{x:cx,y:cy+10,'text-anchor':'middle','font-size':'10',fill:'#0F2544'});
+  ct2.textContent = '¥' + (total/1000000).toFixed(0)+'M';
+  svg.appendChild(ct2);
+
+  // Legend on right
+  const startX=160, startY=8;
+  MEDIA_LIST.forEach((m,i) => {
+    const val=BUDGETS[m].reduce((a,b)=>a+b,0);
+    const pct=(val/total*100).toFixed(0);
+    const y=startY+i*18;
+    const dot=svgEl('rect',{x:startX,y:y,width:10,height:10,rx:'2',fill:MEDIA_COLORS[m]});
+    svg.appendChild(dot);
+    const lbl=svgEl('text',{x:startX+14,y:y+9,'font-size':'10',fill:'#495057'});
+    lbl.textContent=`${m} ${pct}%`;
+    svg.appendChild(lbl);
+  });
+}
+
+function renderCVChart() {
+  const svg = document.getElementById('chart-cv-monthly');
+  svg.innerHTML='';
+  const W=900,H=180,PAD={top:20,right:20,bottom:30,left:55};
+  const cw=W-PAD.left-PAD.right, ch=H-PAD.top-PAD.bottom;
+
+  const totals=MONTHS.map((_,mi)=>MEDIA_LIST.reduce((s,m)=>s+CVS_TARGET[m][mi],0));
+  const maxV=Math.max(...totals)*1.15;
+
+  for(let i=0;i<=4;i++){
+    const y=PAD.top+ch*(1-i/4);
+    svg.appendChild(svgEl('line',{x1:PAD.left,y1:y,x2:W-PAD.right,y2:y,stroke:'#DEE2E6','stroke-width':'1'}));
+    const lbl=svgEl('text',{x:PAD.left-6,y:y+4,'text-anchor':'end','font-size':'9',fill:'#6C757D'});
+    lbl.textContent=Math.round(maxV*i/4);
+    svg.appendChild(lbl);
+  }
+
+  const barW=cw/12;
+  const fyM=getCurrentFYMonth();
+  MONTHS.forEach((_,mi)=>{
+    let yOff=PAD.top+ch;
+    const x=PAD.left+mi*barW+barW*0.1;
+    const bw=barW*0.8;
+    if(mi===fyM){
+      svg.appendChild(svgEl('rect',{x:x-2,y:PAD.top,width:bw+4,height:ch,fill:'rgba(200,137,42,0.08)',rx:'3'}));
+    }
+    MEDIA_LIST.forEach(m=>{
+      const val=CVS_TARGET[m][mi];
+      const bh=(val/maxV)*ch;
+      yOff-=bh;
+      const rect=svgEl('rect',{x,y:yOff,width:bw,height:bh,fill:MEDIA_COLORS[m],opacity:mi===fyM?'1':'0.72'});
+      rect.innerHTML=`<title>${m}: ${val}件</title>`;
+      svg.appendChild(rect);
+    });
+    const lbl=svgEl('text',{x:x+bw/2,y:H-PAD.bottom+14,'text-anchor':'middle','font-size':'9',fill:mi===fyM?'#C8892A':'#6C757D','font-weight':mi===fyM?'700':'400'});
+    lbl.textContent=MONTHS[mi];
+    svg.appendChild(lbl);
+    // total label
+    const tot=totals[mi];
+    const totY=PAD.top+(ch-(tot/maxV)*ch)-5;
+    const tl=svgEl('text',{x:x+bw/2,y:totY,'text-anchor':'middle','font-size':'9','font-weight':'700',fill:'#0F2544'});
+    tl.textContent=tot;
+    svg.appendChild(tl);
+  });
+
+  const legEl=document.getElementById('legend-cv');
+  legEl.innerHTML=MEDIA_LIST.map(m=>`<div class="legend-item"><span class="legend-rect" style="background:${MEDIA_COLORS[m]}"></span>${m}</div>`).join('');
+}
+
+function renderAlerts() {
+  const urgentTactics=tactics.filter(t=>t.status==='緊急対応');
+  const items=[
+    ...urgentTactics.map(t=>({type:'red',icon:'🚨',title:`[${t.no}] ${t.name}（${t.media}）`,desc:`${t.detail} | KPI: ${t.kpi} | 実施時期: ${t.timing}`})),
+    {type:'amber',icon:'⚠️',title:'Google検索 CPC急騰（5月実績）',desc:'「不動産 査定」キーワードのCPCが¥10,311（前月比+72%）。予算消化ペースに要注意。'},
+    {type:'blue',icon:'📊',title:'月次実績データを入力してください',desc:'予実管理タブで各媒体の実績予算・反響数を入力すると、達成率が自動計算されます。'},
+  ];
+  document.getElementById('alert-list').innerHTML=items.map(i=>`
+    <div class="alert-item ${i.type}">
+      <div class="alert-icon">${i.icon}</div>
+      <div class="alert-content">
+        <div class="alert-title">${i.title}</div>
+        <div class="alert-desc">${i.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// TAB 2: 予実管理
+// ============================================================
+function initMonthPills() {
+  const container=document.getElementById('month-pills');
+  container.innerHTML=MONTHS.map((m,i)=>`
+    <button class="month-pill ${i===currentMonth?'active':''}" onclick="setMonth(${i})">${m}</button>
+  `).join('');
+}
+
+function setMonth(i) {
+  currentMonth=i;
+  document.querySelectorAll('.month-pill').forEach((b,idx)=>b.classList.toggle('active',idx===i));
+  renderYojitsuTable();
+}
+
+function setYojitsuView(v) {
+  yojitsuView=v;
+  document.getElementById('toggle-monthly-btn').classList.toggle('active',v==='monthly');
+  document.getElementById('toggle-cumul-btn').classList.toggle('active',v==='cumulative');
+  renderYojitsuTable();
+}
+
+function renderYojitsu() {
+  initMonthPills();
+  updateLastUpdated();
+  renderYojitsuTable();
+  renderYojitsuChart();
+}
+
+function updateLastUpdated() {
+  const ts=state._lastUpdated;
+  const el=document.getElementById('last-updated-text');
+  el.textContent=ts?`最終保存: ${ts}`:'';
+}
+
+function renderYojitsuTable() {
+  const tbody=document.getElementById('yojitsu-tbody');
+  const tfoot=document.getElementById('yojitsu-tfoot');
+
+  let rows='';
+  let totalBudgetT=0,totalActualB=0,totalCVT=0,totalActualCV=0;
+
+  const isMonthly=yojitsuView==='monthly';
+
+  MEDIA_LIST.forEach(m => {
+    let budgetT=0,cvT=0,actualB=0,actualCV=0;
+    if(isMonthly){
+      budgetT=BUDGETS[m][currentMonth];
+      cvT=CVS_TARGET[m][currentMonth];
+      const key=`${m}_${currentMonth}`;
+      actualB=Number(state[key]?.budget||0);
+      actualCV=Number(state[key]?.cv||0);
+    } else {
+      for(let i=0;i<=currentMonth;i++){
+        budgetT+=BUDGETS[m][i];
+        cvT+=CVS_TARGET[m][i];
+        const key=`${m}_${i}`;
+        actualB+=Number(state[key]?.budget||0);
+        actualCV+=Number(state[key]?.cv||0);
+      }
+    }
+    totalBudgetT+=budgetT; totalActualB+=actualB; totalCVT+=cvT; totalActualCV+=actualCV;
+    const targetCPA=cvT>0?budgetT/cvT:0;
+    const actualCPA=actualCV>0?actualB/actualCV:0;
+    const achPct=cvT>0?(actualCV/cvT*100):0;
+    const cls=achPct>0?achClass(achPct):'';
+    const pctDisp=actualCV>0?fmtPct(achPct):'—%';
+    const barW=actualCV>0?Math.min(achPct,100):0;
+    const keyB=`${m}_${currentMonth}_budget`;
+    const keyCV=`${m}_${currentMonth}_cv`;
+
+    rows+=`<tr>
+      <td><span class="media-dot" style="background:${MEDIA_COLORS[m]}"></span>${m}</td>
+      <td class="text-right">¥${fmt(budgetT)}</td>
+      <td class="text-right"><input class="actual-input" id="inp-${m}-b" type="number" value="${actualB||''}" placeholder="0" onchange="onActualChange('${m}','budget',this.value)" ${!isMonthly?'disabled style="background:var(--gray-100)"':''}></td>
+      <td class="text-right">${fmt(cvT)} 件</td>
+      <td class="text-right"><input class="actual-input" id="inp-${m}-cv" type="number" value="${actualCV||''}" placeholder="0" onchange="onActualChange('${m}','cv',this.value)" ${!isMonthly?'disabled style="background:var(--gray-100)"':''}></td>
+      <td class="text-right">${targetCPA>0?'¥'+fmt(targetCPA):'—'}</td>
+      <td class="text-right">${actualCPA>0?'¥'+fmt(actualCPA):'—'}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div class="progress-bar-wrap"><div class="progress-bar-fill ${cls}" style="width:${barW}%"></div></div>
+          <span class="achievement-pct ${cls}">${pctDisp}</span>
+        </div>
+      </td>
+    </tr>`;
+  });
+
+  tbody.innerHTML=rows;
+
+  // Footer totals
+  const totalTargetCPA=totalCVT>0?totalBudgetT/totalCVT:0;
+  const totalActualCPA=totalActualCV>0?totalActualB/totalActualCV:0;
+  const totalAch=totalCVT>0?(totalActualCV/totalCVT*100):0;
+  const totalCls=totalActualCV>0?achClass(totalAch):'';
+  const totalBW=totalActualCV>0?Math.min(totalAch,100):0;
+
+  tfoot.innerHTML=`<tr style="background:var(--gray-100);font-weight:700;">
+    <td>合計</td>
+    <td class="text-right">¥${fmt(totalBudgetT)}</td>
+    <td class="text-right" style="color:var(--blue);">¥${fmt(totalActualB)||'—'}</td>
+    <td class="text-right">${fmt(totalCVT)} 件</td>
+    <td class="text-right" style="color:var(--blue);">${fmt(totalActualCV)||'—'} 件</td>
+    <td class="text-right">${totalTargetCPA>0?'¥'+fmt(totalTargetCPA):'—'}</td>
+    <td class="text-right">${totalActualCPA>0?'¥'+fmt(totalActualCPA):'—'}</td>
+    <td>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div class="progress-bar-wrap"><div class="progress-bar-fill ${totalCls}" style="width:${totalBW}%"></div></div>
+        <span class="achievement-pct ${totalCls}">${totalActualCV>0?fmtPct(totalAch):'—%'}</span>
+      </div>
+    </td>
+  </tr>`;
+
+  renderYojitsuChart();
+}
+
+function onActualChange(media, type, value) {
+  const key=`${media}_${currentMonth}`;
+  if(!state[key]) state[key]={};
+  state[key][type]=Number(value)||0;
+}
+
+function saveActuals() {
+  state._lastUpdated=new Date().toLocaleString('ja-JP');
+  saveState(state);
+  updateLastUpdated();
+  renderKPIs();
+  showToast('実績データを保存しました ✓');
+}
+
+function renderYojitsuChart() {
+  const svg=document.getElementById('chart-yojitsu');
+  svg.innerHTML='';
+  const W=560,H=180,PAD={top:20,right:20,bottom:30,left:50};
+  const cw=W-PAD.left-PAD.right,ch=H-PAD.top-PAD.bottom;
+
+  // Build per-month CV achievement
+  const data=MONTHS.map((_,mi)=>{
+    let cvT=0,actualCV=0;
+    MEDIA_LIST.forEach(m=>{
+      cvT+=CVS_TARGET[m][mi];
+      actualCV+=Number(state[`${m}_${mi}`]?.cv||0);
+    });
+    return cvT>0?(actualCV/cvT*100):0;
+  });
+
+  for(let i=0;i<=4;i++){
+    const y=PAD.top+ch*(1-i/4);
+    svg.appendChild(svgEl('line',{x1:PAD.left,y1:y,x2:W-PAD.right,y2:y,stroke:'#DEE2E6','stroke-width':'1'}));
+    const lbl=svgEl('text',{x:PAD.left-6,y:y+4,'text-anchor':'end','font-size':'9',fill:'#6C757D'});
+    lbl.textContent=(25*i)+'%';
+    svg.appendChild(lbl);
+  }
+
+  // 100% line
+  const y100=PAD.top+ch*(1-1.0);
+  svg.appendChild(svgEl('line',{x1:PAD.left,y1:y100,x2:W-PAD.right,y2:y100,stroke:'#27AE60','stroke-width':'1.5','stroke-dasharray':'4,3'}));
+
+  const bW=cw/12;
+  const fyM=getCurrentFYMonth();
+  data.forEach((pct,mi)=>{
+    const x=PAD.left+mi*bW+bW*0.15;
+    const bw=bW*0.7;
+    const maxPct=120;
+    const bh=Math.min(pct/maxPct,1)*ch;
+    const y=PAD.top+ch-bh;
+    const cls=achClass(pct);
+    const fill=cls==='green'?'#27AE60':cls==='amber'?'#E67E22':pct>0?'#C0392B':'#DEE2E6';
+    svg.appendChild(svgEl('rect',{x,y,width:bw,height:bh||2,fill,rx:'3',opacity:mi===fyM?'1':'0.8'}));
+    if(pct>0){
+      const vl=svgEl('text',{x:x+bw/2,y:y-4,'text-anchor':'middle','font-size':'9','font-weight':'700',fill:'#495057'});
+      vl.textContent=fmtPct(pct);
+      svg.appendChild(vl);
+    }
+    const lbl=svgEl('text',{x:x+bw/2,y:H-PAD.bottom+14,'text-anchor':'middle','font-size':'9',fill:mi===fyM?'#C8892A':'#6C757D'});
+    lbl.textContent=MONTHS[mi];
+    svg.appendChild(lbl);
+  });
+}
+
+// ============================================================
+// TAB 3: 施策管理
+// ============================================================
+function initTacticFilters() {
+  const medias=['全媒体','Google検索','P-MAX','Yahoo!検索','Microsoft','GDN','YDA','Meta'];
+  document.getElementById('media-filter-btns').innerHTML=medias.map(m=>
+    `<button class="filter-btn ${m===mediaFilterActive?'active':''}" onclick="setMediaFilter('${m}')">${m}</button>`
+  ).join('');
+
+  const statuses=['全て','緊急対応','進行中','準備中','計画中','保留','完了'];
+  document.getElementById('status-filter-btns').innerHTML=statuses.map(s=>
+    `<button class="filter-btn ${s===statusFilterActive?'active':''}" onclick="setStatusFilter('${s}')">${s}</button>`
+  ).join('');
+}
+
+function setMediaFilter(m) {
+  mediaFilterActive=m;
+  initTacticFilters();
+  renderTacticBoard();
+}
+
+function setStatusFilter(s) {
+  statusFilterActive=s;
+  initTacticFilters();
+  renderTacticBoard();
+}
+
+function renderTactics() {
+  initTacticFilters();
+  renderTacticBoard();
+}
+
+function renderTacticBoard() {
+  const filtered=tactics.filter(t=>{
+    const mOk=mediaFilterActive==='全媒体'||t.media===mediaFilterActive;
+    const sOk=statusFilterActive==='全て'||t.status===statusFilterActive;
+    return mOk&&sOk;
+  });
+
+  if(!filtered.length){
+    document.getElementById('tactics-board').innerHTML='<div class="empty-state">条件に一致する施策がありません</div>';
+    return;
+  }
+
+  document.getElementById('tactics-board').innerHTML=filtered.map(t=>{
+    const idx=tactics.indexOf(t);
+    const color=MEDIA_COLORS[t.media]||'#6C757D';
+    return `
+    <div class="tactic-card" style="border-top-color:${color};">
+      <div class="tactic-card-header">
+        <div>
+          <div class="tactic-no">${t.no}</div>
+          <div class="tactic-name">${t.name}</div>
+        </div>
+        <span class="status-badge status-${t.status}">${t.status}</span>
+      </div>
+      <div style="margin-bottom:8px;">
+        <span class="tactic-media-tag" style="background:${color}22;color:${color};">${t.media}</span>
+      </div>
+      <div class="tactic-detail">${t.detail}</div>
+      <div class="tactic-meta">
+        <span>🗓 ${t.timing}</span>
+      </div>
+      <div class="tactic-kpi">🎯 KPI: <strong>${t.kpi}</strong></div>
+      <textarea class="tactic-notes" placeholder="メモを追加..." onchange="updateTacticNotes(${idx},this.value)">${t.notes||''}</textarea>
+      <div class="tactic-actions">
+        <select class="form-select" style="padding:4px 8px;font-size:11px;width:auto;" onchange="updateTacticStatus(${idx},this.value)">
+          ${['緊急対応','進行中','準備中','計画中','保留','完了'].map(s=>`<option ${s===t.status?'selected':''}>${s}</option>`).join('')}
+        </select>
+        <button class="btn-sm blue" onclick="editTactic(${idx})">編集</button>
+        <button class="btn-danger" onclick="deleteTactic(${idx})">削除</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateTacticNotes(idx,val) {
+  tactics[idx].notes=val;
+  saveTacticsState(tactics);
+}
+
+function updateTacticStatus(idx,val) {
+  tactics[idx].status=val;
+  saveTacticsState(tactics);
+  renderTacticBoard();
+  // update urgent count
+  const urgent=tactics.filter(t=>t.status==='緊急対応').length;
+  document.getElementById('kpi-urgent').textContent=urgent+'件';
+}
+
+function deleteTactic(idx) {
+  if(!confirm('この施策を削除しますか？')) return;
+  tactics.splice(idx,1);
+  saveTacticsState(tactics);
+  renderTactics();
+  showToast('施策を削除しました');
+}
+
+function openAddTacticModal() {
+  editingTacticIdx=null;
+  document.getElementById('modal-title').textContent='施策を追加';
+  ['no','name','detail','timing','kpi','notes'].forEach(f=>document.getElementById('m-'+f).value='');
+  document.getElementById('m-media').value='Google検索';
+  document.getElementById('m-status').value='計画中';
+  document.getElementById('tactic-modal').classList.add('open');
+}
+
+function editTactic(idx) {
+  editingTacticIdx=idx;
+  const t=tactics[idx];
+  document.getElementById('modal-title').textContent='施策を編集';
+  document.getElementById('m-no').value=t.no;
+  document.getElementById('m-media').value=t.media;
+  document.getElementById('m-name').value=t.name;
+  document.getElementById('m-detail').value=t.detail;
+  document.getElementById('m-timing').value=t.timing;
+  document.getElementById('m-kpi').value=t.kpi;
+  document.getElementById('m-status').value=t.status;
+  document.getElementById('m-notes').value=t.notes||'';
+  document.getElementById('tactic-modal').classList.add('open');
+}
+
+function saveTactic() {
+  const t={
+    no:document.getElementById('m-no').value.trim()||'NEW',
+    media:document.getElementById('m-media').value,
+    name:document.getElementById('m-name').value.trim(),
+    detail:document.getElementById('m-detail').value.trim(),
+    timing:document.getElementById('m-timing').value.trim(),
+    kpi:document.getElementById('m-kpi').value.trim(),
+    status:document.getElementById('m-status').value,
+    notes:document.getElementById('m-notes').value.trim(),
+  };
+  if(!t.name){alert('施策名を入力してください');return;}
+  if(editingTacticIdx!==null){
+    tactics[editingTacticIdx]=t;
+  } else {
+    tactics.push(t);
+  }
+  saveTacticsState(tactics);
+  closeModal('tactic-modal');
+  renderTactics();
+  showToast(editingTacticIdx!==null?'施策を更新しました ✓':'施策を追加しました ✓');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// ============================================================
+// TAB 4: 媒体別詳細
+// ============================================================
+function renderMediaDetail() {
+  const tabsEl=document.getElementById('media-tabs');
+  tabsEl.innerHTML=MEDIA_LIST.map(m=>`
+    <button class="media-tab-btn ${m===activeMediaTab?'active':''}"
+      style="${m===activeMediaTab?'color:'+MEDIA_COLORS[m]+';border-bottom-color:'+MEDIA_COLORS[m]:''}"
+      onclick="setActiveMedia('${m}')">${m}</button>
+  `).join('');
+  renderMediaContent();
+}
+
+function setActiveMedia(m) {
+  activeMediaTab=m;
+  renderMediaDetail();
+}
+
+function renderMediaContent() {
+  const m=activeMediaTab;
+  const color=MEDIA_COLORS[m];
+  const budgets=BUDGETS[m];
+  const cvs=CVS_TARGET[m];
+  const cpas=budgets.map((b,i)=>cvs[i]>0?b/cvs[i]:0);
+  const totalB=budgets.reduce((a,b)=>a+b,0);
+  const totalCV=cvs.reduce((a,b)=>a+b,0);
+  const avgCPA=totalB/totalCV;
+  const maxB=Math.max(...budgets);
+  const maxCV=Math.max(...cvs);
+  const maxCPA=Math.max(...cpas);
+  const fyM=getCurrentFYMonth();
+  const relatedTactics=tactics.filter(t=>t.media===m||t.media==='全媒体');
+
+  const content=document.getElementById('media-detail-content');
+  content.innerHTML=`
+    <div class="grid-3 mb-6">
+      <div class="kpi-card" style="border-top-color:${color}">
+        <div class="kpi-label">年間予算</div>
+        <div class="kpi-value">${fmtM(totalB)}</div>
+        <div class="kpi-sub">FY2026 合計</div>
+      </div>
+      <div class="kpi-card" style="border-top-color:${color}">
+        <div class="kpi-label">年間目標反響</div>
+        <div class="kpi-value">${fmt(totalCV)} 件</div>
+        <div class="kpi-sub">FY2026 合計</div>
+      </div>
+      <div class="kpi-card" style="border-top-color:${color}">
+        <div class="kpi-label">年間目標CPA</div>
+        <div class="kpi-value">¥${fmt(avgCPA)}</div>
+        <div class="kpi-sub">平均単価</div>
+      </div>
+    </div>
+    <div class="grid-2 mb-6">
+      <div class="chart-card">
+        <div class="chart-title">月次予算推移</div>
+        <svg id="chart-media-budget" width="100%" height="160" viewBox="0 0 480 160"></svg>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">月次反響目標・CPA推移</div>
+        <svg id="chart-media-cv" width="100%" height="160" viewBox="0 0 480 160"></svg>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="insight-card">
+        <div class="insight-title">💡 ${m} インサイト</div>
+        <ul class="insight-list" id="media-insights"></ul>
+      </div>
+      <div class="chart-card" style="padding:16px 20px;">
+        <div class="chart-title">関連施策</div>
+        <div id="related-tactics-list"></div>
+      </div>
+    </div>
+  `;
+
+  // Budget sparkline
+  const svgB=document.getElementById('chart-media-budget');
+  renderSparkBar(svgB,budgets,color,maxB,fyM);
+
+  // CV + CPA sparkline
+  const svgCV=document.getElementById('chart-media-cv');
+  renderCVCPAChart(svgCV,cvs,cpas,color,maxCV,maxCPA,fyM);
+
+  // Insights
+  const peakMi=budgets.indexOf(maxB);
+  const minMi=budgets.indexOf(Math.min(...budgets));
+  const insightEl=document.getElementById('media-insights');
+  insightEl.innerHTML=`
+    <li>年間予算: <strong>¥${fmt(totalB/1000000)}M</strong>（全媒体の${(totalB/TOTAL_BUDGET*100).toFixed(1)}%）</li>
+    <li>ピーク月: <strong>${MONTHS[peakMi]}（¥${fmtM(maxB)}）</strong></li>
+    <li>最低月: <strong>${MONTHS[minMi]}（¥${fmtM(Math.min(...budgets))}）</strong></li>
+    <li>今月（${MONTHS[fyM]}）目標CPA: <strong>¥${fmt(cpas[fyM])}</strong></li>
+    <li>今月（${MONTHS[fyM]}）反響目標: <strong>${cvs[fyM]}件</strong></li>
+  `;
+
+  // Related tactics
+  const rtel=document.getElementById('related-tactics-list');
+  if(!relatedTactics.length){
+    rtel.innerHTML='<div style="color:var(--gray-500);font-size:12px;padding:8px 0;">関連施策なし</div>';
+  } else {
+    rtel.innerHTML=relatedTactics.map(t=>`
+      <div style="padding:8px 0;border-bottom:1px solid var(--gray-200);display:flex;align-items:flex-start;gap:10px;">
+        <div style="flex:1;">
+          <div style="font-size:12px;font-weight:700;color:var(--navy);">${t.no}: ${t.name}</div>
+          <div style="font-size:11px;color:var(--gray-500);">${t.timing}</div>
+        </div>
+        <span class="status-badge status-${t.status}">${t.status}</span>
+      </div>
+    `).join('');
+  }
+}
+
+function renderSparkBar(svg,data,color,maxV,fyM) {
+  const W=480,H=160,PAD={top:20,right:10,bottom:28,left:50};
+  const cw=W-PAD.left-PAD.right,ch=H-PAD.top-PAD.bottom;
+  svg.innerHTML='';
+  for(let i=0;i<=3;i++){
+    const y=PAD.top+ch*(1-i/3);
+    svg.appendChild(svgEl('line',{x1:PAD.left,y1:y,x2:W-PAD.right,y2:y,stroke:'#DEE2E6','stroke-width':'1'}));
+    const lbl=svgEl('text',{x:PAD.left-6,y:y+4,'text-anchor':'end','font-size':'9',fill:'#6C757D'});
+    lbl.textContent=(maxV/1000000*i/3).toFixed(1)+'M';
+    svg.appendChild(lbl);
+  }
+  const bW=cw/12;
+  data.forEach((val,mi)=>{
+    const x=PAD.left+mi*bW+bW*0.1;
+    const bw=bW*0.8;
+    const bh=(val/maxV)*ch;
+    const y=PAD.top+ch-bh;
+    svg.appendChild(svgEl('rect',{x,y,width:bw,height:bh||1,fill:color,rx:'3',opacity:mi===fyM?'1':'0.7'}));
+    const lbl=svgEl('text',{x:x+bw/2,y:H-PAD.bottom+12,'text-anchor':'middle','font-size':'8.5',fill:mi===fyM?'#C8892A':'#6C757D'});
+    lbl.textContent=MONTHS[mi];
+    svg.appendChild(lbl);
+  });
+}
+
+function renderCVCPAChart(svg,cvs,cpas,color,maxCV,maxCPA,fyM) {
+  const W=480,H=160,PAD={top:20,right:45,bottom:28,left:45};
+  const cw=W-PAD.left-PAD.right,ch=H-PAD.top-PAD.bottom;
+  svg.innerHTML='';
+  const bW=cw/12;
+
+  for(let i=0;i<=3;i++){
+    const y=PAD.top+ch*(1-i/3);
+    svg.appendChild(svgEl('line',{x1:PAD.left,y1:y,x2:W-PAD.right,y2:y,stroke:'#DEE2E6','stroke-width':'1'}));
+    const lbl=svgEl('text',{x:PAD.left-6,y:y+4,'text-anchor':'end','font-size':'9',fill:'#6C757D'});
+    lbl.textContent=Math.round(maxCV*i/3);
+    svg.appendChild(lbl);
+    if(maxCPA>0){
+      const lbl2=svgEl('text',{x:W-PAD.right+6,y:y+4,'font-size':'9',fill:'#E67E22'});
+      lbl2.textContent=(maxCPA/10000*i/3).toFixed(0)+'万';
+      svg.appendChild(lbl2);
+    }
+  }
+
+  // Bars for CV
+  cvs.forEach((val,mi)=>{
+    const x=PAD.left+mi*bW+bW*0.15;
+    const bw=bW*0.7;
+    const bh=(val/maxCV)*ch;
+    const y=PAD.top+ch-bh;
+    svg.appendChild(svgEl('rect',{x,y,width:bw,height:bh||1,fill:color,rx:'2',opacity:mi===fyM?'0.9':'0.6'}));
+    const lbl=svgEl('text',{x:x+bw/2,y:H-PAD.bottom+12,'text-anchor':'middle','font-size':'8.5',fill:mi===fyM?'#C8892A':'#6C757D'});
+    lbl.textContent=MONTHS[mi];
+    svg.appendChild(lbl);
+  });
+
+  // CPA line
+  if(maxCPA>0){
+    const points=cpas.map((v,mi)=>{
+      const x=PAD.left+mi*bW+bW/2;
+      const y=PAD.top+ch*(1-v/maxCPA);
+      return `${x},${y}`;
+    }).join(' ');
+    const pl=svgEl('polyline',{points,fill:'none',stroke:'#E67E22','stroke-width':'2','stroke-linecap':'round','stroke-linejoin':'round'});
+    svg.appendChild(pl);
+    cpas.forEach((v,mi)=>{
+      const x=PAD.left+mi*bW+bW/2;
+      const y=PAD.top+ch*(1-v/maxCPA);
+      svg.appendChild(svgEl('circle',{cx:x,cy:y,r:'3',fill:'#E67E22'}));
+    });
+  }
+}
+
+// ============================================================
+// TAB 5: ROADMAP
+// ============================================================
+const ROADMAP_DATA = [
+  {cat:'SEM', label:'Google検索', rows:[
+    {name:'CPC急騰対策(SEM-1)',dots:[null,null,'▲','●','●','●','●','●','●','●','●','●']},
+    {name:'極TD CTR改善(SEM-2)',dots:['●','●','●','●','●','●','●','●','●','●','●','●']},
+    {name:'極LP CVR改善(SEM-3)',dots:[null,null,'▲','●','●','●','●','●','●',null,null,null]},
+  ]},
+  {cat:'SEM', label:'P-MAX', rows:[
+    {name:'検索テーマ精度向上(SEM-4)',dots:['●','●','●','●','●','●','●','●','●','●','●','●']},
+  ]},
+  {cat:'Meta', label:'Meta', rows:[
+    {name:'時間帯最適化(Meta-1)',dots:[null,null,'▲','●','●','●','●','●','●','●','●','●']},
+    {name:'クリエイティブABテスト(Meta-2)',dots:[null,null,'▲','▲','▲',null,null,null,null,null,null,null]},
+    {name:'背景・根拠変数テスト(Meta-3)',dots:[null,null,null,'▲','▲','▲',null,null,null,null,null,null]},
+    {name:'DDA再検証(Meta-4)',dots:[null,null,null,null,null,null,'◇','◇','▲','●',null,null]},
+  ]},
+  {cat:'Display', label:'GDN/YDA', rows:[
+    {name:'GA4中間KPI発掘(Display-1)',dots:[null,null,'▲','◉','◉','◉',null,null,null,null,null,null]},
+  ]},
+  {cat:'PDCA', label:'レポート・調査', rows:[
+    {name:'月次報告フォーマット刷新(PDCA-1)',dots:[null,null,'▲','●','●','●','●','●','●','●','●','●']},
+    {name:'マクロミル調査(PDCA-2)',dots:['◉',null,null,null,null,'◉',null,null,null,null,null,'◉']},
+  ]},
+];
+
+const SEASONS = [
+  {months:[0,1],label:'春繁忙期',color:'#FEF9E7',textColor:'#7D6608'},
+  {months:[2,3,4],label:'夏閑散期',color:'#EBF5FB',textColor:'#1A5276'},
+  {months:[5,6,7],label:'秋需要期',color:'#E9F7EF',textColor:'#1E8449'},
+  {months:[8,9,10,11],label:'冬〜年度末',color:'#FDF2F8',textColor:'#6C3483'},
+];
+
+const SEARCH_IDX = [85,90,78,95,80,100,95,88,75,110,95,85];
+
+function renderRoadmap() {
+  const container=document.getElementById('roadmap-table');
+  const fyM=getCurrentFYMonth();
+
+  let html='<div class="roadmap-grid">';
+
+  // Season row
+  html+='<div class="season-row">';
+  html+='<div style="background:var(--gray-200);border-right:2px solid var(--gray-300);"></div>';
+  let rendered=new Set();
+  for(let mi=0;mi<12;mi++){
+    const season=SEASONS.find(s=>s.months.includes(mi));
+    if(season && !rendered.has(season.label)){
+      const span=season.months.length;
+      html+=`<div class="season-cell" style="grid-column:span ${span};background:${season.color};color:${season.textColor};border-right:1px solid ${season.color};">${season.label}</div>`;
+      rendered.add(season.label);
+    }
+  }
+  html+='</div>';
+
+  // Header
+  html+='<div class="roadmap-header">';
+  html+='<div class="roadmap-header-cell" style="text-align:left;padding-left:12px;">施策名</div>';
+  MONTHS.forEach((m,mi)=>{
+    html+=`<div class="roadmap-header-cell" style="${mi===fyM?'background:#C8892A;':''}">${m}${mi===fyM?'▼':''}</div>`;
+  });
+  html+='</div>';
+
+  // Search index row
+  html+='<div class="roadmap-row">';
+  html+='<div class="roadmap-row-label" style="font-size:10px;">検索Idx</div>';
+  SEARCH_IDX.forEach((v,mi)=>{
+    const h=Math.round(v*0.2);
+    html+=`<div class="roadmap-cell" style="font-size:9px;color:var(--gray-600);">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+        <div style="width:20px;height:${h}px;background:#4285F4;opacity:0.5;border-radius:2px;"></div>
+        <span>${v}</span>
+      </div>
+    </div>`;
+  });
+  html+='</div>';
+
+  // Category rows
+  let lastCat='';
+  ROADMAP_DATA.forEach(catData=>{
+    if(catData.cat!==lastCat){
+      html+=`<div class="roadmap-category-header"><div class="roadmap-category-label">${catData.cat}</div>${MONTHS.map(()=>'<div></div>').join('')}</div>`;
+      lastCat=catData.cat;
+    }
+    // sub-label
+    html+=`<div class="roadmap-row" style="background:var(--gray-100);">`;
+    html+=`<div class="roadmap-row-label" style="font-weight:400;font-size:10px;color:var(--gray-600);">【${catData.label}】</div>`;
+    html+=MONTHS.map(()=>'<div class="roadmap-cell"></div>').join('');
+    html+='</div>';
+
+    catData.rows.forEach(row=>{
+      html+='<div class="roadmap-row">';
+      html+=`<div class="roadmap-row-label" style="font-size:10px;font-weight:500;line-height:1.3;">${row.name}</div>`;
+      row.dots.forEach((dot,mi)=>{
+        const isCurrent=mi===fyM;
+        const dotColor=dot?'var(--blue)':'transparent';
+        const dotStr=dot||'';
+        html+=`<div class="roadmap-cell" style="${isCurrent?'background:rgba(200,137,42,0.08)':''}" title="${MONTHS[mi]}: ${dotStr||'—'}">
+          <span style="color:${dot?'var(--navy)':'transparent'};font-size:${dot==='●'?'16px':'14px'};">${dotStr}</span>
+        </div>`;
+      });
+      html+='</div>';
+    });
+  });
+
+  html+='</div>';
+  container.innerHTML=html;
+}
+
+// ============================================================
+// RESET
+// ============================================================
+function resetData() {
+  if(!confirm('全ての実績データとカスタム施策をリセットしますか？\n（この操作は元に戻せません）')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(TACTICS_KEY);
+  state={};
+  tactics=JSON.parse(JSON.stringify(DEFAULT_TACTICS));
+  renderDashboard();
+  showToast('データをリセットしました');
+}
+
+// Close modal on overlay click
+document.getElementById('tactic-modal').addEventListener('click', function(e){
+  if(e.target===this) closeModal('tactic-modal');
+});
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  initHeader();
+  renderDashboard();
+}
+init();
+</script>
+</body>
+</html>
