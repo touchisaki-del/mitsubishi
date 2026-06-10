@@ -928,10 +928,6 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
   <div class="modal">
     <div class="modal-title" id="modal-title">施策を追加</div>
     <div class="form-group">
-      <label class="form-label">施策No.</label>
-      <input type="text" class="form-input" id="m-no" placeholder="例: SEM-5">
-    </div>
-    <div class="form-group">
       <label class="form-label">媒体</label>
       <select class="form-select" id="m-media">
         <option>Google検索</option>
@@ -1766,7 +1762,7 @@ function deleteTactic(idx) {
 function openAddTacticModal() {
   editingTacticIdx=null;
   document.getElementById('modal-title').textContent='施策を追加';
-  ['no','name','detail','timing','kpi','notes'].forEach(f=>document.getElementById('m-'+f).value='');
+  ['name','detail','timing','kpi','notes'].forEach(f=>document.getElementById('m-'+f).value='');
   document.getElementById('m-media').value='Google検索';
   document.getElementById('m-status').value='計画中';
   document.getElementById('tactic-modal').classList.add('open');
@@ -1776,7 +1772,6 @@ function editTactic(idx) {
   editingTacticIdx=idx;
   const t=tactics[idx];
   document.getElementById('modal-title').textContent='施策を編集';
-  document.getElementById('m-no').value=t.no;
   document.getElementById('m-media').value=t.media;
   document.getElementById('m-name').value=t.name;
   document.getElementById('m-detail').value=t.detail;
@@ -1789,7 +1784,7 @@ function editTactic(idx) {
 
 function saveTactic() {
   const t={
-    no:document.getElementById('m-no').value.trim()||'NEW',
+    no:'',
     media:document.getElementById('m-media').value,
     name:document.getElementById('m-name').value.trim(),
     detail:document.getElementById('m-detail').value.trim(),
