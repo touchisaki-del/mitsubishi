@@ -824,16 +824,10 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
       </div>
       <svg id="chart-monthly" width="100%" height="200" viewBox="0 0 560 200"></svg>
     </div>
-    <!-- Spotlight -->
-    <div>
-      <div class="spotlight-card mb-4" id="spotlight-card">
-        <div class="spotlight-title" id="spotlight-title">TODAY'S FOCUS</div>
-        <div class="spotlight-grid" id="spotlight-grid"></div>
-      </div>
-      <div class="chart-card" style="padding: 16px 20px;">
-        <div class="chart-title">媒体別予算配分</div>
-        <svg id="chart-donut" width="100%" height="140" viewBox="0 0 300 140"></svg>
-      </div>
+    <!-- Donut chart -->
+    <div class="chart-card" style="padding: 16px 20px;">
+      <div class="chart-title">媒体別予算配分</div>
+      <svg id="chart-donut" width="100%" height="140" viewBox="0 0 300 140"></svg>
     </div>
   </div>
 
@@ -1148,7 +1142,6 @@ function svgEl(tag, attrs) {
 function renderDashboard() {
   renderKPIs();
   renderMonthlyBudgetChart();
-  renderSpotlight();
   renderDonutChart();
   renderCVChart();
 }
