@@ -1147,27 +1147,54 @@ function renderDashboard() {
 }
 
 function renderKPIs() {
-  // Calculate actuals from state
-  let totalActualBudget = 0, totalActualCV = 0;
+  // Find which months have any actual data entered
+  const monthsWithData = [];
   for (let mi=0; mi<12; mi++) {
-    MEDIA_LIST.forEach(m => {
-      const key = `${m}_${mi}`;
-      if (state[key]) {
-        totalActualBudget += Number(state[key].budget||0);
-        totalActualCV += Number(state[key].cv||0);
-      }
+    const hasData = MEDIA_LIST.some(m => {
+      const d = state[`${m}_${mi}`];
+      return d && (Number(d.budget||0) > 0 || Number(d.cv||0) > 0);
     });
+    if (hasData) monthsWithData.push(mi);
   }
-  const digestPct = totalActualBudget > 0 ? (totalActualBudget/TOTAL_BUDGET*100) : null;
-  const cvPct = totalActualCV > 0 ? (totalActualCV/TOTAL_CV*100) : null;
-  const actualCPA = totalActualCV > 0 ? totalActualBudget/totalActualCV : null;
 
-  document.getElementById('kpi-actual-budget').textContent = totalActualBudget > 0 ? '¥' + (totalActualBudget/1000000).toFixed(1) + 'M' : '¥—';
-  document.getElementById('kpi-actual-cv').textContent = totalActualCV > 0 ? fmt(totalActualCV) + '件' : '—件';
+  let totalActualBudget = 0, totalActualCV = 0;
+  let totalTargetBudget = 0, totalTargetCV = 0;
+
+  monthsWithData.forEach(mi => {
+    MEDIA_LIST.forEach(m => {
+      const d = state[`${m}_${mi}`] || {};
+      totalActualBudget += Number(d.budget||0);
+      totalActualCV    += Number(d.cv||0);
+      totalTargetBudget += BUDGETS[m][mi];
+      totalTargetCV    += CVS_TARGET[m][mi];
+    });
+  });
+
+  const hasAny = monthsWithData.length > 0;
+  // Compare actual vs target FOR THE SAME MONTHS (not full year)
+  const digestPct = hasAny && totalTargetBudget > 0 ? (totalActualBudget / totalTargetBudget * 100) : null;
+  const cvPct     = hasAny && totalTargetCV > 0     ? (totalActualCV    / totalTargetCV    * 100) : null;
+  const actualCPA = totalActualCV > 0 ? totalActualBudget / totalActualCV : null;
+
+  // Period label e.g. "4〜5月累計"
+  const periodLabel = hasAny
+    ? (monthsWithData.length === 1
+        ? MONTHS[monthsWithData[0]] + '累計'
+        : MONTHS[monthsWithData[0]] + '〜' + MONTHS[monthsWithData[monthsWithData.length-1]] + '累計')
+    : null;
+
+  document.getElementById('kpi-actual-budget').textContent = hasAny ? '¥' + (totalActualBudget/1000000).toFixed(1) + 'M' : '¥—';
+  document.getElementById('kpi-actual-cv').textContent     = hasAny ? fmt(totalActualCV) + '件' : '—件';
+
+  // Sub text: show period
+  const budgetSubEl = document.querySelector('#kpi-actual-budget').closest('.kpi-card').querySelector('.kpi-sub');
+  budgetSubEl.textContent = periodLabel ? periodLabel + ' 実績（目標 ¥874.8M）' : '目標 ¥874.8M';
+  const cvSubEl = document.querySelector('#kpi-actual-cv').closest('.kpi-card').querySelector('.kpi-sub');
+  cvSubEl.textContent = periodLabel ? periodLabel + ' 実績（目標 5,851件）' : '目標 5,851件';
 
   const digestBadge = document.getElementById('kpi-digest-badge');
-  if (digestPct) {
-    digestBadge.textContent = '消化率 ' + fmtPct(digestPct);
+  if (digestPct !== null) {
+    digestBadge.textContent = '同期目標比 ' + fmtPct(digestPct);
     digestBadge.className = 'kpi-badge ' + achClass(digestPct);
   } else {
     digestBadge.textContent = '実績入力待ち';
@@ -1175,15 +1202,26 @@ function renderKPIs() {
   }
 
   const cvBadge = document.getElementById('kpi-cv-badge');
-  if (cvPct) {
-    cvBadge.textContent = '達成率 ' + fmtPct(cvPct);
+  if (cvPct !== null) {
+    cvBadge.textContent = '同期目標比 ' + fmtPct(cvPct);
     cvBadge.className = 'kpi-badge ' + achClass(cvPct);
   } else {
     cvBadge.textContent = '実績入力待ち';
     cvBadge.className = 'kpi-badge amber';
   }
 
+  const cpaSub = document.querySelector('#kpi-cpa').closest('.kpi-card').querySelector('.kpi-sub');
+  cpaSub.textContent = periodLabel ? periodLabel + ' 実績CPA' : '目標 ¥149,513';
   document.getElementById('kpi-cpa').textContent = actualCPA ? '¥' + fmt(actualCPA) : '¥—';
+  const cpaBadge = document.getElementById('kpi-cpa-badge');
+  if (actualCPA) {
+    const ok = actualCPA <= 149513;
+    cpaBadge.textContent = ok ? '目標内 ✓' : '目標超過 ¥' + fmt(actualCPA - 149513) + '超';
+    cpaBadge.className = 'kpi-badge ' + (ok ? 'green' : 'red');
+  } else {
+    cpaBadge.textContent = '目標 ¥149,513';
+    cpaBadge.className = 'kpi-badge green';
+  }
 }
 
 function renderMonthlyBudgetChart() {
