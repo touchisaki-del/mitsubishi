@@ -912,6 +912,7 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
     </div>
     <button class="btn-primary" onclick="openAddTacticModal()">＋ 施策を追加</button>
   </div>
+  <div id="status-summary" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;"></div>
   <div class="tactics-board" id="tactics-board"></div>
 </div>
 
@@ -1331,12 +1332,22 @@ function renderDonutChart() {
 function renderCVChart() {
   const svg = document.getElementById('chart-cv-monthly');
   svg.innerHTML='';
-  const W=900,H=180,PAD={top:20,right:20,bottom:30,left:55};
+  const W=900,H=200,PAD={top:24,right:20,bottom:32,left:55};
   const cw=W-PAD.left-PAD.right, ch=H-PAD.top-PAD.bottom;
 
-  const totals=MONTHS.map((_,mi)=>MEDIA_LIST.reduce((s,m)=>s+CVS_TARGET[m][mi],0));
-  const maxV=Math.max(...totals)*1.15;
+  // compute totals
+  const targetTotals=MONTHS.map((_,mi)=>MEDIA_LIST.reduce((s,m)=>s+CVS_TARGET[m][mi],0));
+  const actualTotals=MONTHS.map((_,mi)=>{
+    let total=0;
+    MEDIA_LIST.forEach(m=>{
+      total+=Number(state[`${m}_${mi}`]?.cv||0);
+    });
+    return total;
+  });
+  const hasActual=MONTHS.map((_,mi)=>actualTotals[mi]>0);
+  const maxV=Math.max(...targetTotals)*1.2;
 
+  // grid lines
   for(let i=0;i<=4;i++){
     const y=PAD.top+ch*(1-i/4);
     svg.appendChild(svgEl('line',{x1:PAD.left,y1:y,x2:W-PAD.right,y2:y,stroke:'#DEE2E6','stroke-width':'1'}));
@@ -1347,34 +1358,61 @@ function renderCVChart() {
 
   const barW=cw/12;
   const fyM=getCurrentFYMonth();
+
   MONTHS.forEach((_,mi)=>{
-    let yOff=PAD.top+ch;
     const x=PAD.left+mi*barW+barW*0.1;
     const bw=barW*0.8;
+    const targetVal=targetTotals[mi];
+    const actualVal=actualTotals[mi];
+    const targetH=(targetVal/maxV)*ch;
+    const targetY=PAD.top+ch-targetH;
+
+    // current month highlight
     if(mi===fyM){
-      svg.appendChild(svgEl('rect',{x:x-2,y:PAD.top,width:bw+4,height:ch,fill:'rgba(200,137,42,0.08)',rx:'3'}));
+      svg.appendChild(svgEl('rect',{x:x-2,y:PAD.top,width:bw+4,height:ch,fill:'rgba(200,137,42,0.06)',rx:'3'}));
     }
-    MEDIA_LIST.forEach(m=>{
-      const val=CVS_TARGET[m][mi];
-      const bh=(val/maxV)*ch;
-      yOff-=bh;
-      const rect=svgEl('rect',{x,y:yOff,width:bw,height:bh,fill:MEDIA_COLORS[m],opacity:mi===fyM?'1':'0.72'});
-      rect.innerHTML=`<title>${m}: ${val}件</title>`;
-      svg.appendChild(rect);
-    });
+
+    if(hasActual[mi]){
+      // Draw target bar (light background)
+      svg.appendChild(svgEl('rect',{x,y:targetY,width:bw,height:targetH,fill:'#C8161D',opacity:'0.15',rx:'3'}));
+
+      // Draw actual bar (solid teal)
+      const actualH=(actualVal/maxV)*ch;
+      const actualY=PAD.top+ch-actualH;
+      svg.appendChild(svgEl('rect',{x,y:actualY,width:bw,height:actualH,fill:'#0F6E56',rx:'3',opacity:'0.9'}));
+
+      // Gap bar (if actual < target)
+      if(actualVal<targetVal){
+        const gapH=targetH-actualH;
+        svg.appendChild(svgEl('rect',{x:x+bw*0.15,y:targetY,width:bw*0.7,height:gapH,fill:'#E74C3C',opacity:'0.45',rx:'2'}));
+        // Gap label
+        const gap=targetVal-actualVal;
+        const gapLbl=svgEl('text',{x:x+bw/2,y:targetY-3,'text-anchor':'middle','font-size':'8','font-weight':'700',fill:'#E74C3C'});
+        gapLbl.textContent='-'+gap;
+        svg.appendChild(gapLbl);
+      }
+      // Actual label
+      const aLbl=svgEl('text',{x:x+bw/2,y:actualY-4,'text-anchor':'middle','font-size':'9','font-weight':'700',fill:'#0F6E56'});
+      aLbl.textContent=actualVal;
+      svg.appendChild(aLbl);
+    } else {
+      // No actual - show target only (dashed outline style)
+      svg.appendChild(svgEl('rect',{x,y:targetY,width:bw,height:targetH,fill:'#DEE2E6',rx:'3',opacity:'0.8'}));
+      // target label
+      const tLbl=svgEl('text',{x:x+bw/2,y:targetY-4,'text-anchor':'middle','font-size':'9',fill:'#6C757D'});
+      tLbl.textContent=targetVal;
+      svg.appendChild(tLbl);
+    }
+
+    // x axis label
     const lbl=svgEl('text',{x:x+bw/2,y:H-PAD.bottom+14,'text-anchor':'middle','font-size':'9',fill:mi===fyM?'#C8892A':'#6C757D','font-weight':mi===fyM?'700':'400'});
     lbl.textContent=MONTHS[mi];
     svg.appendChild(lbl);
-    // total label
-    const tot=totals[mi];
-    const totY=PAD.top+(ch-(tot/maxV)*ch)-5;
-    const tl=svgEl('text',{x:x+bw/2,y:totY,'text-anchor':'middle','font-size':'9','font-weight':'700',fill:'#0F2544'});
-    tl.textContent=tot;
-    svg.appendChild(tl);
   });
 
+  // Remove old legend update since we replaced the title area
   const legEl=document.getElementById('legend-cv');
-  legEl.innerHTML=MEDIA_LIST.map(m=>`<div class="legend-item"><span class="legend-rect" style="background:${MEDIA_COLORS[m]}"></span>${m}</div>`).join('');
+  if(legEl) legEl.innerHTML='';
 }
 
 function renderAlerts() {
@@ -1603,7 +1641,31 @@ function setStatusFilter(s) {
   renderTacticBoard();
 }
 
+function renderStatusSummary() {
+  const statuses = ['緊急対応','進行中','準備中','計画中','保留','完了'];
+  const statusColors = {
+    '緊急対応':'#922B21','進行中':'#1A5276','準備中':'#7D6608',
+    '計画中':'#1E8449','保留':'#5D6D7E','完了':'#0B6E4F'
+  };
+  const statusBg = {
+    '緊急対応':'#FADBD8','進行中':'#D6EAF8','準備中':'#FEF9E7',
+    '計画中':'#E8F8F5','保留':'#F2F3F4','完了':'#D5F5E3'
+  };
+  const counts = {};
+  statuses.forEach(s => { counts[s] = tactics.filter(t=>t.status===s).length; });
+
+  const el = document.getElementById('status-summary');
+  el.innerHTML = statuses.map(s => `
+    <div style="background:${statusBg[s]};color:${statusColors[s]};padding:8px 16px;border-radius:8px;cursor:pointer;transition:all 0.2s;border:2px solid ${statusFilterActive===s?statusColors[s]:'transparent'}"
+      onclick="setStatusFilter('${s}')">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.05em;">${s}</div>
+      <div style="font-size:22px;font-weight:900;line-height:1.1;">${counts[s]}<span style="font-size:11px;font-weight:500;">件</span></div>
+    </div>
+  `).join('');
+}
+
 function renderTactics() {
+  renderStatusSummary();
   initTacticFilters();
   renderTacticBoard();
 }
@@ -1660,6 +1722,7 @@ function updateTacticNotes(idx,val) {
 function updateTacticStatus(idx,val) {
   tactics[idx].status=val;
   saveTacticsState(tactics);
+  renderStatusSummary();
   renderTacticBoard();
   // update urgent count
   const urgent=tactics.filter(t=>t.status==='緊急対応').length;
@@ -1671,6 +1734,7 @@ function deleteTactic(idx) {
   tactics.splice(idx,1);
   saveTacticsState(tactics);
   renderTactics();
+  renderStatusSummary();
   showToast('施策を削除しました');
 }
 
@@ -1974,7 +2038,7 @@ function renderRoadmap() {
 
   // Search index row
   html+='<div class="roadmap-row">';
-  html+='<div class="roadmap-row-label" style="font-size:10px;">検索Idx</div>';
+  html+='<div class="roadmap-row-label" style="font-size:10px;">検索Vol</div>';
   SEARCH_IDX.forEach((v,mi)=>{
     const h=Math.round(v*0.2);
     html+=`<div class="roadmap-cell" style="font-size:9px;color:var(--gray-600);">
