@@ -7,9 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy: #0F2544;
-  --blue: #1A4A8A;
-  --blue-light: #2A6ACA;
+  --navy: #1A1A2E;
+  --blue: #C8161D;
+  --blue-light: #E03030;
+  --brand-dark: #8C0D10;
+  --brand-light: #FDECEA;
   --gold: #C8892A;
   --gold-light: #E8A94A;
   --teal: #0F6E56;
@@ -50,7 +52,7 @@ body {
 }
 /* Header */
 .header {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  background: linear-gradient(135deg, #1A1A2E 0%, #8C0D10 100%);
   color: var(--white);
   padding: 0 24px;
   display: flex;
@@ -776,9 +778,8 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
 <!-- Tabs -->
 <nav class="tabs-nav">
   <button class="tab-btn active" onclick="showTab('dashboard')">📊 ダッシュボード</button>
-  <button class="tab-btn" onclick="showTab('yojitsu')">📈 予実管理</button>
+  <button class="tab-btn" onclick="showTab('yojitsu')">📈 月別推移</button>
   <button class="tab-btn" onclick="showTab('tactics')">📋 施策管理</button>
-  <button class="tab-btn" onclick="showTab('media')">📡 媒体別詳細</button>
   <button class="tab-btn" onclick="showTab('roadmap')">🗓 ロードマップ</button>
 </nav>
 
@@ -786,21 +787,21 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
 <div id="tab-dashboard" class="tab-panel active">
   <div class="kpi-grid">
     <div class="kpi-card">
-      <div class="kpi-label">年間予算</div>
-      <div class="kpi-value">¥874.8M</div>
-      <div class="kpi-sub">全媒体合計 FY2026</div>
-      <div class="kpi-badge green" id="kpi-digest-badge">消化率 — %</div>
+      <div class="kpi-label">年間消化予算（実績累計）</div>
+      <div class="kpi-value" id="kpi-actual-budget">¥—</div>
+      <div class="kpi-sub">目標 ¥874.8M</div>
+      <div class="kpi-badge amber" id="kpi-digest-badge">実績入力待ち</div>
     </div>
     <div class="kpi-card gold">
-      <div class="kpi-label">年間目標反響</div>
-      <div class="kpi-value">5,851件</div>
-      <div class="kpi-sub">CV合計 FY2026</div>
-      <div class="kpi-badge amber" id="kpi-cv-badge">達成率 — %</div>
+      <div class="kpi-label">年間累計反響数（実績）</div>
+      <div class="kpi-value" id="kpi-actual-cv">—件</div>
+      <div class="kpi-sub">目標 5,851件</div>
+      <div class="kpi-badge amber" id="kpi-cv-badge">実績入力待ち</div>
     </div>
     <div class="kpi-card teal">
-      <div class="kpi-label">年間目標CPA</div>
+      <div class="kpi-label">年間実績CPA</div>
       <div class="kpi-value" id="kpi-cpa">¥—</div>
-      <div class="kpi-sub">実績CPA（累計）</div>
+      <div class="kpi-sub">目標 ¥149,513</div>
       <div class="kpi-badge green" id="kpi-cpa-badge">目標 ¥149,513</div>
     </div>
     <div class="kpi-card red">
@@ -809,6 +810,9 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
       <div class="kpi-sub">要即対応アクション</div>
       <div class="kpi-badge red">要対応</div>
     </div>
+  </div>
+  <div style="font-size:11px;color:var(--gray-600);margin-bottom:16px;padding:8px 14px;background:var(--brand-light);border-radius:6px;border-left:3px solid var(--blue);">
+    📝 実績データの入力は <strong>「月別推移」タブ</strong> の各月・各媒体の入力欄から行ってください。入力後「実績を保存」を押すとダッシュボードに反映されます。
   </div>
 
   <div class="grid-2 mb-6">
@@ -836,10 +840,15 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
   <!-- CV Monthly chart -->
   <div class="chart-card mb-6">
     <div class="flex-between mb-4">
-      <div class="chart-title">月次反響数推移（目標）</div>
-      <div class="legend" id="legend-cv"></div>
+      <div class="chart-title">月次反響数推移（目標 vs 実績・Gap）</div>
+      <div style="display:flex;gap:16px;align-items:center;">
+        <div class="legend-item"><span class="legend-rect" style="background:var(--blue);opacity:0.4"></span>目標</div>
+        <div class="legend-item"><span class="legend-rect" style="background:var(--teal)"></span>実績</div>
+        <div class="legend-item"><span class="legend-rect" style="background:#E74C3C;opacity:0.5"></span>Gap（未達）</div>
+      </div>
     </div>
-    <svg id="chart-cv-monthly" width="100%" height="180" viewBox="0 0 900 180"></svg>
+    <svg id="chart-cv-monthly" width="100%" height="200" viewBox="0 0 900 200"></svg>
+    <div style="font-size:11px;color:var(--gray-500);margin-top:8px;">※ 実績未入力月は目標値のみ表示。実績がある月は目標との差（Gap）を表示。</div>
   </div>
 
   <!-- Alerts -->
@@ -906,13 +915,7 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
   <div class="tactics-board" id="tactics-board"></div>
 </div>
 
-<!-- ===== TAB 4: 媒体別詳細 ===== -->
-<div id="tab-media" class="tab-panel">
-  <div class="media-tabs" id="media-tabs"></div>
-  <div id="media-detail-content"></div>
-</div>
-
-<!-- ===== TAB 5: ROADMAP ===== -->
+<!-- ===== TAB 4: ROADMAP ===== -->
 <div id="tab-roadmap" class="tab-panel">
   <div class="chart-card mb-4">
     <div class="flex-between mb-4">
@@ -1127,11 +1130,10 @@ function showTab(id) {
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   const btns = document.querySelectorAll('.tab-btn');
-  const names = ['dashboard','yojitsu','tactics','media','roadmap'];
+  const names = ['dashboard','yojitsu','tactics','roadmap'];
   btns[names.indexOf(id)].classList.add('active');
   if (id==='yojitsu') renderYojitsu();
   if (id==='tactics') renderTactics();
-  if (id==='media') renderMediaDetail();
   if (id==='roadmap') renderRoadmap();
 }
 
@@ -1171,6 +1173,9 @@ function renderKPIs() {
   const digestPct = totalActualBudget > 0 ? (totalActualBudget/TOTAL_BUDGET*100) : null;
   const cvPct = totalActualCV > 0 ? (totalActualCV/TOTAL_CV*100) : null;
   const actualCPA = totalActualCV > 0 ? totalActualBudget/totalActualCV : null;
+
+  document.getElementById('kpi-actual-budget').textContent = totalActualBudget > 0 ? '¥' + (totalActualBudget/1000000).toFixed(1) + 'M' : '¥—';
+  document.getElementById('kpi-actual-cv').textContent = totalActualCV > 0 ? fmt(totalActualCV) + '件' : '—件';
 
   const digestBadge = document.getElementById('kpi-digest-badge');
   if (digestPct) {
