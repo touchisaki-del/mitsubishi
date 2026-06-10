@@ -851,11 +851,6 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
     <div style="font-size:11px;color:var(--gray-500);margin-top:8px;">※ 実績未入力月は目標値のみ表示。実績がある月は目標との差（Gap）を表示。</div>
   </div>
 
-  <!-- Alerts -->
-  <div class="section-header">
-    <div class="section-title">緊急対応 / 要注目アラート</div>
-  </div>
-  <div class="alert-list" id="alert-list"></div>
 </div>
 
 <!-- ===== TAB 2: 予実管理 ===== -->
@@ -1156,7 +1151,6 @@ function renderDashboard() {
   renderSpotlight();
   renderDonutChart();
   renderCVChart();
-  renderAlerts();
 }
 
 function renderKPIs() {
