@@ -910,12 +910,6 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
   <div class="chart-card mb-4">
     <div class="flex-between mb-4">
       <div class="chart-title">FY2026 施策ロードマップ（4月〜3月）</div>
-      <div class="legend">
-        <div class="legend-item"><span style="font-size:14px;">●</span> 継続実施</div>
-        <div class="legend-item"><span style="font-size:14px;">▲</span> 新規開始</div>
-        <div class="legend-item"><span style="font-size:14px;">◉</span> 調査・分析</div>
-        <div class="legend-item"><span style="font-size:14px;">◇</span> 要件確認中</div>
-      </div>
     </div>
     <div class="roadmap-container">
       <div id="roadmap-table"></div>
@@ -951,6 +945,26 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
     <div class="form-group">
       <label class="form-label">実施時期</label>
       <input type="text" class="form-input" id="m-timing" placeholder="例: 2026/6〜通期">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-group">
+        <label class="form-label">開始月</label>
+        <select class="form-select" id="m-startMonth">
+          <option value="0">4月</option><option value="1">5月</option><option value="2">6月</option>
+          <option value="3">7月</option><option value="4">8月</option><option value="5">9月</option>
+          <option value="6">10月</option><option value="7">11月</option><option value="8">12月</option>
+          <option value="9">1月</option><option value="10">2月</option><option value="11">3月</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">終了月</label>
+        <select class="form-select" id="m-endMonth">
+          <option value="0">4月</option><option value="1">5月</option><option value="2">6月</option>
+          <option value="3">7月</option><option value="4">8月</option><option value="5">9月</option>
+          <option value="6">10月</option><option value="7">11月</option><option value="8">12月</option>
+          <option value="9">1月</option><option value="10">2月</option><option value="11">3月</option>
+        </select>
+      </div>
     </div>
     <div class="form-group">
       <label class="form-label">KPI</label>
@@ -1009,7 +1023,7 @@ const CVS_TARGET = {
 const MEDIA_LIST = Object.keys(BUDGETS);
 const MEDIA_COLORS = {
   'Google検索':'#4285F4','P-MAX':'#34A853','Yahoo!検索':'#FF0033',
-  'Microsoft':'#00A4EF','GDN':'#FBBC04','YDA':'#FF6900','Meta':'#1877F2'
+  'Microsoft':'#00A4EF','GDN':'#FBBC04','YDA':'#FF6900','Meta':'#1877F2','全媒体':'#6C757D'
 };
 
 // Annual totals
@@ -1019,17 +1033,17 @@ const TARGET_CPA = TOTAL_BUDGET/TOTAL_CV;
 
 // Default tactics
 const DEFAULT_TACTICS = [
-  {no:'SEM-1',media:'Google検索',name:'CPC急騰対策',detail:'「不動産 査定」CPC5月¥10,311（+72%MoM）。マッチタイプ見直し・除外KW追加・入札調整',timing:'2026/6〜通期',kpi:'CPC¥5,000以下',status:'緊急対応',notes:''},
-  {no:'SEM-2',media:'Google検索',name:'極TD：CTR改善検証',detail:'AI生成TDで広告文最適化。CTR改善→実質CPC低減',timing:'2026/4〜通期',kpi:'CTR+10%改善',status:'進行中',notes:''},
-  {no:'SEM-3',media:'Google検索',name:'極LP：CVR改善検証',detail:'LP最適化でCVR改善。GA4中間KPIと連動',timing:'2026/6〜',kpi:'CVR+15%改善',status:'準備中',notes:''},
-  {no:'SEM-4',media:'P-MAX',name:'検索テーマ精度向上',detail:'売却意向高クエリに絞った検索テーマ。Asset Group細分化',timing:'2026/4〜通期',kpi:'CPA¥145K以内',status:'進行中',notes:''},
-  {no:'Meta-1',media:'Meta',name:'時間帯最適化',detail:'深夜0〜4時カット→朝シフト。火・日曜引き締め',timing:'2026/6〜',kpi:'新規リーチ率60%以上',status:'緊急対応',notes:''},
-  {no:'Meta-2',media:'Meta',name:'クリエイティブABテスト',detail:'コピー固定×人物変数（女性/夫婦/定年前）3種',timing:'2026/6〜8月',kpi:'CTR+15% / CVR+10%',status:'準備中',notes:''},
-  {no:'Meta-3',media:'Meta',name:'背景・根拠変数テスト',detail:'室内背景・価格推移グラフ追加テスト',timing:'2026/7〜9月',kpi:'CVR改善確認',status:'計画中',notes:''},
-  {no:'Meta-4',media:'Meta',name:'DDA再検証（下期）',detail:'Meta版DDA別アプローチ。中止基準事前合意',timing:'2026/10〜',kpi:'要件定義後決定',status:'保留',notes:''},
-  {no:'Display-1',media:'GDN',name:'GA4中間KPI発掘',detail:'問い合わせユーザーの回遊行動分析。中間KPI定義',timing:'2026/6〜9月',kpi:'中間KPI定義完了',status:'進行中',notes:''},
-  {no:'PDCA-1',media:'全媒体',name:'月次報告フォーマット刷新',detail:'「数・単価・質」3軸を月次報告フレームに追加',timing:'2026/6〜',kpi:'顧客満足度改善',status:'緊急対応',notes:''},
-  {no:'PDCA-2',media:'全媒体',name:'マクロミル調査3回実施',detail:'認知率・TOM・検討意向を競合比較でトラッキング',timing:'4月/9月/3月',kpi:'認知率+5pt改善',status:'計画中',notes:''},
+  {no:'',media:'Google検索',name:'CPC急騰対策',detail:'「不動産 査定」CPC5月¥10,311（+72%MoM）。マッチタイプ見直し・除外KW追加・入札調整',timing:'2026/6〜通期',kpi:'CPC¥5,000以下',status:'緊急対応',notes:'',startMonth:2,endMonth:11},
+  {no:'',media:'Google検索',name:'極TD：CTR改善検証',detail:'AI生成TDで広告文最適化。CTR改善→実質CPC低減',timing:'2026/4〜通期',kpi:'CTR+10%改善',status:'進行中',notes:'',startMonth:0,endMonth:11},
+  {no:'',media:'Google検索',name:'極LP：CVR改善検証',detail:'LP最適化でCVR改善。GA4中間KPIと連動',timing:'2026/6〜',kpi:'CVR+15%改善',status:'準備中',notes:'',startMonth:2,endMonth:11},
+  {no:'',media:'P-MAX',name:'検索テーマ精度向上',detail:'売却意向高クエリに絞った検索テーマ。Asset Group細分化',timing:'2026/4〜通期',kpi:'CPA¥145K以内',status:'進行中',notes:'',startMonth:0,endMonth:11},
+  {no:'',media:'Meta',name:'時間帯最適化',detail:'深夜0〜4時カット→朝シフト。火・日曜引き締め',timing:'2026/6〜',kpi:'新規リーチ率60%以上',status:'緊急対応',notes:'',startMonth:2,endMonth:11},
+  {no:'',media:'Meta',name:'クリエイティブABテスト',detail:'コピー固定×人物変数（女性/夫婦/定年前）3種',timing:'2026/6〜8月',kpi:'CTR+15% / CVR+10%',status:'準備中',notes:'',startMonth:2,endMonth:4},
+  {no:'',media:'Meta',name:'背景・根拠変数テスト',detail:'室内背景・価格推移グラフ追加テスト',timing:'2026/7〜9月',kpi:'CVR改善確認',status:'計画中',notes:'',startMonth:3,endMonth:5},
+  {no:'',media:'Meta',name:'DDA再検証（下期）',detail:'Meta版DDA別アプローチ。中止基準事前合意',timing:'2026/10〜',kpi:'要件定義後決定',status:'保留',notes:'',startMonth:6,endMonth:11},
+  {no:'',media:'GDN',name:'GA4中間KPI発掘',detail:'問い合わせユーザーの回遊行動分析。中間KPI定義',timing:'2026/6〜9月',kpi:'中間KPI定義完了',status:'進行中',notes:'',startMonth:2,endMonth:5},
+  {no:'',media:'全媒体',name:'月次報告フォーマット刷新',detail:'「数・単価・質」3軸を月次報告フレームに追加',timing:'2026/6〜',kpi:'顧客満足度改善',status:'緊急対応',notes:'',startMonth:2,endMonth:11},
+  {no:'',media:'全媒体',name:'マクロミル調査3回実施',detail:'認知率・TOM・検討意向を競合比較でトラッキング',timing:'4月/9月/3月',kpi:'認知率+5pt改善',status:'計画中',notes:'',startMonth:0,endMonth:11},
 ];
 
 // ============================================================
@@ -1740,6 +1754,12 @@ function updateTacticNotes(idx,val) {
   saveTacticsState(tactics);
 }
 
+function maybeRefreshRoadmap() {
+  if (document.getElementById('tab-roadmap').classList.contains('active')) {
+    renderRoadmap();
+  }
+}
+
 function updateTacticStatus(idx,val) {
   tactics[idx].status=val;
   saveTacticsState(tactics);
@@ -1748,6 +1768,7 @@ function updateTacticStatus(idx,val) {
   // update urgent count
   const urgent=tactics.filter(t=>t.status==='緊急対応').length;
   document.getElementById('kpi-urgent').textContent=urgent+'件';
+  maybeRefreshRoadmap();
 }
 
 function deleteTactic(idx) {
@@ -1756,6 +1777,7 @@ function deleteTactic(idx) {
   saveTacticsState(tactics);
   renderTactics();
   renderStatusSummary();
+  maybeRefreshRoadmap();
   showToast('施策を削除しました');
 }
 
@@ -1765,6 +1787,8 @@ function openAddTacticModal() {
   ['name','detail','timing','kpi','notes'].forEach(f=>document.getElementById('m-'+f).value='');
   document.getElementById('m-media').value='Google検索';
   document.getElementById('m-status').value='計画中';
+  document.getElementById('m-startMonth').value = '0';
+  document.getElementById('m-endMonth').value = '11';
   document.getElementById('tactic-modal').classList.add('open');
 }
 
@@ -1779,6 +1803,8 @@ function editTactic(idx) {
   document.getElementById('m-kpi').value=t.kpi;
   document.getElementById('m-status').value=t.status;
   document.getElementById('m-notes').value=t.notes||'';
+  document.getElementById('m-startMonth').value = t.startMonth ?? 0;
+  document.getElementById('m-endMonth').value = t.endMonth ?? 11;
   document.getElementById('tactic-modal').classList.add('open');
 }
 
@@ -1792,6 +1818,8 @@ function saveTactic() {
     kpi:document.getElementById('m-kpi').value.trim(),
     status:document.getElementById('m-status').value,
     notes:document.getElementById('m-notes').value.trim(),
+    startMonth: parseInt(document.getElementById('m-startMonth').value),
+    endMonth: parseInt(document.getElementById('m-endMonth').value),
   };
   if(!t.name){alert('施策名を入力してください');return;}
   if(editingTacticIdx!==null){
@@ -1802,6 +1830,7 @@ function saveTactic() {
   saveTacticsState(tactics);
   closeModal('tactic-modal');
   renderTactics();
+  maybeRefreshRoadmap();
   showToast(editingTacticIdx!==null?'施策を更新しました ✓':'施策を追加しました ✓');
 }
 
@@ -1995,111 +2024,116 @@ function renderCVCPAChart(svg,cvs,cpas,color,maxCV,maxCPA,fyM) {
 // ============================================================
 // TAB 5: ROADMAP
 // ============================================================
-const ROADMAP_DATA = [
-  {cat:'SEM', label:'Google検索', rows:[
-    {name:'CPC急騰対策(SEM-1)',dots:[null,null,'▲','●','●','●','●','●','●','●','●','●']},
-    {name:'極TD CTR改善(SEM-2)',dots:['●','●','●','●','●','●','●','●','●','●','●','●']},
-    {name:'極LP CVR改善(SEM-3)',dots:[null,null,'▲','●','●','●','●','●','●',null,null,null]},
-  ]},
-  {cat:'SEM', label:'P-MAX', rows:[
-    {name:'検索テーマ精度向上(SEM-4)',dots:['●','●','●','●','●','●','●','●','●','●','●','●']},
-  ]},
-  {cat:'Meta', label:'Meta', rows:[
-    {name:'時間帯最適化(Meta-1)',dots:[null,null,'▲','●','●','●','●','●','●','●','●','●']},
-    {name:'クリエイティブABテスト(Meta-2)',dots:[null,null,'▲','▲','▲',null,null,null,null,null,null,null]},
-    {name:'背景・根拠変数テスト(Meta-3)',dots:[null,null,null,'▲','▲','▲',null,null,null,null,null,null]},
-    {name:'DDA再検証(Meta-4)',dots:[null,null,null,null,null,null,'◇','◇','▲','●',null,null]},
-  ]},
-  {cat:'Display', label:'GDN/YDA', rows:[
-    {name:'GA4中間KPI発掘(Display-1)',dots:[null,null,'▲','◉','◉','◉',null,null,null,null,null,null]},
-  ]},
-  {cat:'PDCA', label:'レポート・調査', rows:[
-    {name:'月次報告フォーマット刷新(PDCA-1)',dots:[null,null,'▲','●','●','●','●','●','●','●','●','●']},
-    {name:'マクロミル調査(PDCA-2)',dots:['◉',null,null,null,null,'◉',null,null,null,null,null,'◉']},
-  ]},
-];
-
-const SEASONS = [
-  {months:[0,1],label:'春繁忙期',color:'#FEF9E7',textColor:'#7D6608'},
-  {months:[2,3,4],label:'夏閑散期',color:'#EBF5FB',textColor:'#1A5276'},
-  {months:[5,6,7],label:'秋需要期',color:'#E9F7EF',textColor:'#1E8449'},
-  {months:[8,9,10,11],label:'冬〜年度末',color:'#FDF2F8',textColor:'#6C3483'},
-];
-
-const SEARCH_IDX = [85,90,78,95,80,100,95,88,75,110,95,85];
-
 function renderRoadmap() {
-  const container=document.getElementById('roadmap-table');
-  const fyM=getCurrentFYMonth();
+  const container = document.getElementById('roadmap-table');
+  const fyM = getCurrentFYMonth();
 
-  let html='<div class="roadmap-grid">';
+  // Dot symbol and color by status
+  function getDot(status) {
+    if (status === '緊急対応') return {sym:'●', color:'#C8161D'};
+    if (status === '進行中')   return {sym:'●', color:'#1A4A8A'};
+    if (status === '準備中')   return {sym:'▲', color:'#0F6E56'};
+    if (status === '計画中')   return {sym:'◇', color:'#C8892A'};
+    if (status === '保留')     return {sym:'◇', color:'#ADB5BD'};
+    if (status === '完了')     return {sym:'●', color:'#27AE60'};
+    return {sym:'●', color:'#ADB5BD'};
+  }
+
+  // Group tactics by media
+  const mediaOrder = ['Google検索','P-MAX','Yahoo!検索','Microsoft','GDN','YDA','Meta','全媒体'];
+  const grouped = {};
+  mediaOrder.forEach(m => { grouped[m] = []; });
+  tactics.forEach(t => {
+    const m = t.media || '全媒体';
+    if (!grouped[m]) grouped[m] = [];
+    grouped[m].push(t);
+  });
+
+  let html = '<div class="roadmap-grid">';
 
   // Season row
-  html+='<div class="season-row">';
-  html+='<div style="background:var(--gray-200);border-right:2px solid var(--gray-300);"></div>';
-  let rendered=new Set();
-  for(let mi=0;mi<12;mi++){
-    const season=SEASONS.find(s=>s.months.includes(mi));
-    if(season && !rendered.has(season.label)){
-      const span=season.months.length;
-      html+=`<div class="season-cell" style="grid-column:span ${span};background:${season.color};color:${season.textColor};border-right:1px solid ${season.color};">${season.label}</div>`;
+  html += '<div class="season-row">';
+  html += '<div style="background:var(--gray-200);border-right:2px solid var(--gray-300);"></div>';
+  const SEASONS_LOCAL = [
+    {months:[0,1],label:'春繁忙期',color:'#FEF9E7',textColor:'#7D6608'},
+    {months:[2,3,4],label:'夏閑散期',color:'#EBF5FB',textColor:'#1A5276'},
+    {months:[5,6,7],label:'秋需要期',color:'#E9F7EF',textColor:'#1E8449'},
+    {months:[8,9,10,11],label:'冬〜年度末',color:'#FDF2F8',textColor:'#6C3483'},
+  ];
+  let rendered = new Set();
+  for (let mi = 0; mi < 12; mi++) {
+    const season = SEASONS_LOCAL.find(s => s.months.includes(mi));
+    if (season && !rendered.has(season.label)) {
+      html += `<div class="season-cell" style="grid-column:span ${season.months.length};background:${season.color};color:${season.textColor};border-right:1px solid ${season.color};">${season.label}</div>`;
       rendered.add(season.label);
     }
   }
-  html+='</div>';
+  html += '</div>';
 
-  // Header
-  html+='<div class="roadmap-header">';
-  html+='<div class="roadmap-header-cell" style="text-align:left;padding-left:12px;">施策名</div>';
-  MONTHS.forEach((m,mi)=>{
-    html+=`<div class="roadmap-header-cell" style="${mi===fyM?'background:#C8892A;':''}">${m}${mi===fyM?'▼':''}</div>`;
+  // Header row
+  html += '<div class="roadmap-header">';
+  html += '<div class="roadmap-header-cell" style="text-align:left;padding-left:12px;">施策名</div>';
+  MONTHS.forEach((m, mi) => {
+    html += `<div class="roadmap-header-cell" style="${mi===fyM?'background:#C8892A;':''}">${m}${mi===fyM?'▼':''}</div>`;
   });
-  html+='</div>';
+  html += '</div>';
 
-  // Search index row
-  html+='<div class="roadmap-row">';
-  html+='<div class="roadmap-row-label" style="font-size:10px;">検索Vol</div>';
-  SEARCH_IDX.forEach((v,mi)=>{
-    const h=Math.round(v*0.2);
-    html+=`<div class="roadmap-cell" style="font-size:9px;color:var(--gray-600);">
+  // Search vol row
+  const SEARCH_IDX = [85,90,78,95,80,100,95,88,75,110,95,85];
+  html += '<div class="roadmap-row">';
+  html += '<div class="roadmap-row-label" style="font-size:10px;">検索Vol</div>';
+  SEARCH_IDX.forEach((v, mi) => {
+    const h = Math.round(v * 0.2);
+    html += `<div class="roadmap-cell" style="font-size:9px;color:var(--gray-600);">
       <div style="display:flex;flex-direction:column;align-items:center;gap:1px;">
         <div style="width:20px;height:${h}px;background:#4285F4;opacity:0.5;border-radius:2px;"></div>
         <span>${v}</span>
       </div>
     </div>`;
   });
-  html+='</div>';
+  html += '</div>';
 
-  // Category rows
-  let lastCat='';
-  ROADMAP_DATA.forEach(catData=>{
-    if(catData.cat!==lastCat){
-      html+=`<div class="roadmap-category-header"><div class="roadmap-category-label">${catData.cat}</div>${MONTHS.map(()=>'<div></div>').join('')}</div>`;
-      lastCat=catData.cat;
-    }
-    // sub-label
-    html+=`<div class="roadmap-row" style="background:var(--gray-100);">`;
-    html+=`<div class="roadmap-row-label" style="font-weight:400;font-size:10px;color:var(--gray-600);">【${catData.label}】</div>`;
-    html+=MONTHS.map(()=>'<div class="roadmap-cell"></div>').join('');
-    html+='</div>';
+  // Tactics rows grouped by media
+  mediaOrder.forEach(media => {
+    const rows = grouped[media];
+    if (!rows || rows.length === 0) return;
 
-    catData.rows.forEach(row=>{
-      html+='<div class="roadmap-row">';
-      html+=`<div class="roadmap-row-label" style="font-size:10px;font-weight:500;line-height:1.3;">${row.name}</div>`;
-      row.dots.forEach((dot,mi)=>{
-        const isCurrent=mi===fyM;
-        const dotColor=dot?'var(--blue)':'transparent';
-        const dotStr=dot||'';
-        html+=`<div class="roadmap-cell" style="${isCurrent?'background:rgba(200,137,42,0.08)':''}" title="${MONTHS[mi]}: ${dotStr||'—'}">
-          <span style="color:${dot?'var(--navy)':'transparent'};font-size:${dot==='●'?'16px':'14px'};">${dotStr}</span>
+    const color = MEDIA_COLORS[media] || '#6C757D';
+    // Category header
+    html += `<div class="roadmap-category-header" style="background:${color};">
+      <div class="roadmap-category-label">${media}</div>
+      ${MONTHS.map(() => '<div></div>').join('')}
+    </div>`;
+
+    rows.forEach(t => {
+      const start = t.startMonth ?? 0;
+      const end = t.endMonth ?? 11;
+      const dot = getDot(t.status);
+      html += '<div class="roadmap-row">';
+      html += `<div class="roadmap-row-label" style="font-size:10px;font-weight:500;line-height:1.3;" title="${t.detail}">${t.name}</div>`;
+      for (let mi = 0; mi < 12; mi++) {
+        const isCurrent = mi === fyM;
+        const active = mi >= start && mi <= end;
+        html += `<div class="roadmap-cell" style="${isCurrent ? 'background:rgba(200,137,42,0.08)' : ''}" title="${MONTHS[mi]}: ${active ? t.status : '—'}">
+          <span style="color:${active ? dot.color : 'transparent'};font-size:${dot.sym==='●'?'16px':'14px'};font-weight:700;">${active ? dot.sym : '●'}</span>
         </div>`;
-      });
-      html+='</div>';
+      }
+      html += '</div>';
     });
   });
 
-  html+='</div>';
-  container.innerHTML=html;
+  html += '</div>';
+
+  // Legend
+  html += `<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:11px;color:var(--gray-600);">
+    <div style="display:flex;align-items:center;gap:4px;"><span style="color:#C8161D;font-size:14px;">●</span> 緊急対応</div>
+    <div style="display:flex;align-items:center;gap:4px;"><span style="color:#1A4A8A;font-size:14px;">●</span> 進行中</div>
+    <div style="display:flex;align-items:center;gap:4px;"><span style="color:#0F6E56;font-size:14px;">▲</span> 準備中</div>
+    <div style="display:flex;align-items:center;gap:4px;"><span style="color:#C8892A;font-size:14px;">◇</span> 計画中／保留</div>
+    <div style="display:flex;align-items:center;gap:4px;"><span style="color:#27AE60;font-size:14px;">●</span> 完了</div>
+  </div>`;
+
+  container.innerHTML = html;
 }
 
 // ============================================================
