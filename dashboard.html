@@ -777,11 +777,55 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
 
 <!-- Tabs -->
 <nav class="tabs-nav">
+  <button class="tab-btn" onclick="showTab('strategy')">🗺 戦略マップ</button>
   <button class="tab-btn active" onclick="showTab('dashboard')">📊 ダッシュボード</button>
   <button class="tab-btn" onclick="showTab('yojitsu')">📈 月別推移</button>
   <button class="tab-btn" onclick="showTab('tactics')">📋 施策管理</button>
   <button class="tab-btn" onclick="showTab('roadmap')">🗓 ロードマップ</button>
 </nav>
+
+<!-- ===== TAB: 戦略マップ ===== -->
+<div id="tab-strategy" class="tab-panel">
+
+  <!-- 3 Strategic Pillars -->
+  <div class="section-header">
+    <div class="section-title">FY2026 全体戦略 3本柱</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
+    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-top:5px solid #C8161D;">
+      <div style="font-size:24px;margin-bottom:8px;">🔍</div>
+      <div style="font-size:15px;font-weight:700;color:#1A1A2E;margin-bottom:8px;">検索偏重の脱却</div>
+      <div style="font-size:12px;color:#6C757D;line-height:1.7;">CPC高騰・AIO影響で検索単独依存はリスク大。Meta・ディスプレイへの分散投資で安定したCV獲得構造を構築する。</div>
+      <div style="margin-top:12px;padding:8px 12px;background:#FDECEA;border-radius:6px;font-size:11px;color:#C8161D;font-weight:600;">成功状態：検索依存率 60%以下</div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-top:5px solid #0F6E56;">
+      <div style="font-size:24px;margin-bottom:8px;">📺</div>
+      <div style="font-size:15px;font-weight:700;color:#1A1A2E;margin-bottom:8px;">ディスプレイの拡大</div>
+      <div style="font-size:12px;color:#6C757D;line-height:1.7;">GDN・YDA・MetaのASC活用で潜在層へのリーチを拡大。検索前段階での認知醸成がCPC低減につながる。</div>
+      <div style="margin-top:12px;padding:8px 12px;background:#E8F8F5;border-radius:6px;font-size:11px;color:#0F6E56;font-weight:600;">成功状態：ディスプレイCV比率 25%以上</div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-top:5px solid #C8892A;">
+      <div style="font-size:24px;margin-bottom:8px;">⭐</div>
+      <div style="font-size:15px;font-weight:700;color:#1A1A2E;margin-bottom:8px;">反響の質の改善</div>
+      <div style="font-size:12px;color:#6C757D;line-height:1.7;">件数だけでなく成約率・手数料単価をKPIに追加。エリア×種別でターゲット精度を上げ、高単価案件の割合を高める。</div>
+      <div style="margin-top:12px;padding:8px 12px;background:#FEF3C7;border-radius:6px;font-size:11px;color:#C8892A;font-weight:600;">成功状態：成約率・単価の前年比改善</div>
+    </div>
+  </div>
+
+  <!-- Quarterly Themes -->
+  <div class="flex-between" style="margin-bottom:16px;">
+    <div class="section-title">四半期テーマ</div>
+    <button class="btn-primary" onclick="openQuarterEditModal()">✎ 四半期テーマを編集</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px;" id="quarter-cards"></div>
+
+  <!-- Strategy × Tactics matrix -->
+  <div class="section-header" style="margin-bottom:16px;">
+    <div class="section-title">戦略 × 施策マトリクス</div>
+  </div>
+  <div id="strategy-matrix"></div>
+
+</div>
 
 <!-- ===== TAB 1: DASHBOARD ===== -->
 <div id="tab-dashboard" class="tab-panel active">
@@ -917,6 +961,18 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
   </div>
 </div>
 
+<!-- MODAL: Quarter Edit -->
+<div class="modal-overlay" id="quarter-modal">
+  <div class="modal" style="width:640px;">
+    <div class="modal-title">四半期テーマを編集</div>
+    <div id="quarter-form-rows"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('quarter-modal')">キャンセル</button>
+      <button class="btn-primary" onclick="saveQuarterThemes()">保存</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: Add/Edit Tactic -->
 <div class="modal-overlay" id="tactic-modal">
   <div class="modal">
@@ -969,6 +1025,28 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
     <div class="form-group">
       <label class="form-label">KPI</label>
       <input type="text" class="form-input" id="m-kpi" placeholder="例: CTR+10%改善">
+    </div>
+    <div class="form-group">
+      <label class="form-label">紐づく戦略</label>
+      <select class="form-select" id="m-strategy">
+        <option value="">— 選択 —</option>
+        <option value="検索偏重の脱却">🔍 検索偏重の脱却</option>
+        <option value="ディスプレイの拡大">📺 ディスプレイの拡大</option>
+        <option value="反響の質の改善">⭐ 反響の質の改善</option>
+        <option value="横断">🔄 横断（全戦略）</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">なぜ今やるのか</label>
+      <textarea class="form-textarea" id="m-reason" placeholder="このタイミングで実施する理由・背景" style="min-height:60px;"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">検証後の想定効果</label>
+      <textarea class="form-textarea" id="m-expected" placeholder="施策を検証・実施した場合に期待される変化" style="min-height:60px;"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">成功状態の定義</label>
+      <input type="text" class="form-input" id="m-success" placeholder="どうなれば成功か（例: CPC ¥5,000以下を3ヶ月継続）">
     </div>
     <div class="form-group">
       <label class="form-label">ステータス</label>
@@ -1033,17 +1111,17 @@ const TARGET_CPA = TOTAL_BUDGET/TOTAL_CV;
 
 // Default tactics
 const DEFAULT_TACTICS = [
-  {no:'',media:'Google検索',name:'CPC急騰対策',detail:'「不動産 査定」CPC5月¥10,311（+72%MoM）。マッチタイプ見直し・除外KW追加・入札調整',timing:'2026/6〜通期',kpi:'CPC¥5,000以下',status:'緊急対応',notes:'',startMonth:2,endMonth:11},
-  {no:'',media:'Google検索',name:'極TD：CTR改善検証',detail:'AI生成TDで広告文最適化。CTR改善→実質CPC低減',timing:'2026/4〜通期',kpi:'CTR+10%改善',status:'進行中',notes:'',startMonth:0,endMonth:11},
-  {no:'',media:'Google検索',name:'極LP：CVR改善検証',detail:'LP最適化でCVR改善。GA4中間KPIと連動',timing:'2026/6〜',kpi:'CVR+15%改善',status:'準備中',notes:'',startMonth:2,endMonth:11},
-  {no:'',media:'P-MAX',name:'検索テーマ精度向上',detail:'売却意向高クエリに絞った検索テーマ。Asset Group細分化',timing:'2026/4〜通期',kpi:'CPA¥145K以内',status:'進行中',notes:'',startMonth:0,endMonth:11},
-  {no:'',media:'Meta',name:'時間帯最適化',detail:'深夜0〜4時カット→朝シフト。火・日曜引き締め',timing:'2026/6〜',kpi:'新規リーチ率60%以上',status:'緊急対応',notes:'',startMonth:2,endMonth:11},
-  {no:'',media:'Meta',name:'クリエイティブABテスト',detail:'コピー固定×人物変数（女性/夫婦/定年前）3種',timing:'2026/6〜8月',kpi:'CTR+15% / CVR+10%',status:'準備中',notes:'',startMonth:2,endMonth:4},
-  {no:'',media:'Meta',name:'背景・根拠変数テスト',detail:'室内背景・価格推移グラフ追加テスト',timing:'2026/7〜9月',kpi:'CVR改善確認',status:'計画中',notes:'',startMonth:3,endMonth:5},
-  {no:'',media:'Meta',name:'DDA再検証（下期）',detail:'Meta版DDA別アプローチ。中止基準事前合意',timing:'2026/10〜',kpi:'要件定義後決定',status:'保留',notes:'',startMonth:6,endMonth:11},
-  {no:'',media:'GDN',name:'GA4中間KPI発掘',detail:'問い合わせユーザーの回遊行動分析。中間KPI定義',timing:'2026/6〜9月',kpi:'中間KPI定義完了',status:'進行中',notes:'',startMonth:2,endMonth:5},
-  {no:'',media:'全媒体',name:'月次報告フォーマット刷新',detail:'「数・単価・質」3軸を月次報告フレームに追加',timing:'2026/6〜',kpi:'顧客満足度改善',status:'緊急対応',notes:'',startMonth:2,endMonth:11},
-  {no:'',media:'全媒体',name:'マクロミル調査3回実施',detail:'認知率・TOM・検討意向を競合比較でトラッキング',timing:'4月/9月/3月',kpi:'認知率+5pt改善',status:'計画中',notes:'',startMonth:0,endMonth:11},
+  {no:'',media:'Google検索',name:'CPC急騰対策',detail:'「不動産 査定」CPC5月¥10,311（+72%MoM）。マッチタイプ見直し・除外KW追加・入札調整',timing:'2026/6〜通期',kpi:'CPC¥5,000以下',status:'緊急対応',notes:'',startMonth:2,endMonth:11,strategy:'検索偏重の脱却',reason:'2026年5月CPC¥10,311と前月比+72%急騰。放置すると予算超過・CV減少が直結するため即対応必須。',expected:'CPC¥5,000以下に戻ることで月次予算内でのCV確保が可能になる。',success:'CPC¥5,000以下を2ヶ月継続'},
+  {no:'',media:'Google検索',name:'極TD：CTR改善検証',detail:'AI生成TDで広告文最適化。CTR改善→実質CPC低減',timing:'2026/4〜通期',kpi:'CTR+10%改善',status:'進行中',notes:'',startMonth:0,endMonth:11,strategy:'検索偏重の脱却',reason:'CTR改善は実質CPCを下げる最速手段。AIO影響下でもクリックを獲得するため。',expected:'CTR+10%改善で同予算でのクリック数増加。',success:'CTR前月比+10%改善'},
+  {no:'',media:'Google検索',name:'極LP：CVR改善検証',detail:'LP最適化でCVR改善。GA4中間KPIと連動',timing:'2026/6〜',kpi:'CVR+15%改善',status:'準備中',notes:'',startMonth:2,endMonth:11,strategy:'反響の質の改善',reason:'CVRを上げれば同予算でCV増加。CPAの構造的改善が可能。',expected:'CVR+15%でCPAが実質的に下がり年間+XXCV相当。',success:'CVR+15%改善を確認'},
+  {no:'',media:'P-MAX',name:'検索テーマ精度向上',detail:'売却意向高クエリに絞った検索テーマ。Asset Group細分化',timing:'2026/4〜通期',kpi:'CPA¥145K以内',status:'進行中',notes:'',startMonth:0,endMonth:11,strategy:'検索偏重の脱却',reason:'P-MAXの検索テーマ精度を上げることで検索広告の補完として機能させる。',expected:'CPA¥145K以内で安定したCV獲得。',success:'CPA¥145K以内を維持'},
+  {no:'',media:'Meta',name:'時間帯最適化',detail:'深夜0〜4時カット→朝シフト。火・日曜引き締め',timing:'2026/6〜',kpi:'新規リーチ率60%以上',status:'緊急対応',notes:'',startMonth:2,endMonth:11,strategy:'ディスプレイの拡大',reason:'5〜6月データで深夜CV=0・火日CPA高騰が判明。即改善でMeta効率が上がる。',expected:'同予算でCV+10〜15%改善見込み。',success:'新規リーチ率60%以上かつCPA¥130K以下'},
+  {no:'',media:'Meta',name:'クリエイティブABテスト',detail:'コピー固定×人物変数（女性/夫婦/定年前）3種',timing:'2026/6〜8月',kpi:'CTR+15% / CVR+10%',status:'準備中',notes:'',startMonth:2,endMonth:4,strategy:'ディスプレイの拡大',reason:'現行クリエイティブの勝ちパターンを横展開する最小コストの検証。',expected:'CTR+15%・CVR+10%改善でMetaのCPA改善。',success:'勝ちクリエイティブ特定・CTR+15%'},
+  {no:'',media:'Meta',name:'背景・根拠変数テスト',detail:'室内背景・価格推移グラフ追加テスト',timing:'2026/7〜9月',kpi:'CVR改善確認',status:'計画中',notes:'',startMonth:3,endMonth:5,strategy:'ディスプレイの拡大',reason:'②の勝ちパターン確認後に背景変数を追加検証。自分ごと化強化が狙い。',expected:'CVRさらなる改善。',success:'CVR改善確認（ベースライン比）'},
+  {no:'',media:'Meta',name:'DDA再検証（下期）',detail:'Meta版DDA別アプローチ。中止基準事前合意',timing:'2026/10〜',kpi:'要件定義後決定',status:'保留',notes:'',startMonth:6,endMonth:11,strategy:'ディスプレイの拡大',reason:'前回中止となったDDAを中止基準事前合意の上で再挑戦。学習期間を適切に設定。',expected:'DDA成立でMeta効率が大幅改善する可能性。',success:'要件定義後に設定'},
+  {no:'',media:'GDN',name:'GA4中間KPI発掘',detail:'問い合わせユーザーの回遊行動分析。中間KPI定義',timing:'2026/6〜9月',kpi:'中間KPI定義完了',status:'進行中',notes:'',startMonth:2,endMonth:5,strategy:'反響の質の改善',reason:'中間KPIを定義することで「件数」以外の質的指標を施策に反映できる。',expected:'問い合わせ前行動の可視化により高質ユーザーの特定が可能に。',success:'中間KPI定義完了・媒体最適化に反映'},
+  {no:'',media:'全媒体',name:'月次報告フォーマット刷新',detail:'「数・単価・質」3軸を月次報告フレームに追加',timing:'2026/6〜',kpi:'顧客満足度改善',status:'緊急対応',notes:'',startMonth:2,endMonth:11,strategy:'反響の質の改善',reason:'顧客から「質の話ができていない」との指摘。次回定例から試行。',expected:'数・単価・質の3軸レビューで施策精度が上がる。',success:'顧客との質的議論が毎月の定例で実施できている'},
+  {no:'',media:'全媒体',name:'マクロミル調査3回実施',detail:'認知率・TOM・検討意向を競合比較でトラッキング',timing:'4月/9月/3月',kpi:'認知率+5pt改善',status:'計画中',notes:'',startMonth:0,endMonth:11,strategy:'横断',reason:'認知率34.4%（競合70〜80%台）という構造的課題の把握と上長説明材料。',expected:'認知率+5ptで指名検索増加・CPC低下の好循環。',success:'認知率+5pt改善（年度末調査）'},
 ];
 
 // ============================================================
@@ -1130,8 +1208,9 @@ function showTab(id) {
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   const btns = document.querySelectorAll('.tab-btn');
-  const names = ['dashboard','yojitsu','tactics','roadmap'];
+  const names = ['strategy','dashboard','yojitsu','tactics','roadmap'];
   btns[names.indexOf(id)].classList.add('active');
+  if (id==='strategy') renderStrategy();
   if (id==='yojitsu') renderYojitsu();
   if (id==='tactics') renderTactics();
   if (id==='roadmap') renderRoadmap();
@@ -1737,6 +1816,9 @@ function renderTacticBoard() {
         <span>🗓 ${t.timing}</span>
       </div>
       <div class="tactic-kpi">🎯 KPI: <strong>${t.kpi}</strong></div>
+      ${t.strategy ? `<div style="font-size:10px;font-weight:700;color:var(--gray-500);margin-bottom:4px;">紐づく戦略</div><div style="font-size:11px;color:var(--blue);margin-bottom:8px;">${t.strategy}</div>` : ''}
+      ${t.reason ? `<div style="font-size:10px;font-weight:700;color:var(--gray-500);margin-bottom:2px;">なぜ今やるのか</div><div style="font-size:11px;color:var(--gray-700);margin-bottom:8px;line-height:1.5;">${t.reason}</div>` : ''}
+      ${t.success ? `<div style="font-size:10px;font-weight:700;color:var(--gray-500);margin-bottom:2px;">成功状態</div><div style="font-size:11px;font-weight:600;color:var(--teal);margin-bottom:8px;">${t.success}</div>` : ''}
       <textarea class="tactic-notes" placeholder="メモを追加..." onchange="updateTacticNotes(${idx},this.value)">${t.notes||''}</textarea>
       <div class="tactic-actions">
         <select class="form-select" style="padding:4px 8px;font-size:11px;width:auto;" onchange="updateTacticStatus(${idx},this.value)">
@@ -1769,6 +1851,7 @@ function updateTacticStatus(idx,val) {
   const urgent=tactics.filter(t=>t.status==='緊急対応').length;
   document.getElementById('kpi-urgent').textContent=urgent+'件';
   maybeRefreshRoadmap();
+  if (document.getElementById('tab-strategy').classList.contains('active')) renderStrategy();
 }
 
 function deleteTactic(idx) {
@@ -1778,6 +1861,7 @@ function deleteTactic(idx) {
   renderTactics();
   renderStatusSummary();
   maybeRefreshRoadmap();
+  if (document.getElementById('tab-strategy').classList.contains('active')) renderStrategy();
   showToast('施策を削除しました');
 }
 
@@ -1789,6 +1873,10 @@ function openAddTacticModal() {
   document.getElementById('m-status').value='計画中';
   document.getElementById('m-startMonth').value = '0';
   document.getElementById('m-endMonth').value = '11';
+  ['m-strategy','m-reason','m-expected','m-success'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
   document.getElementById('tactic-modal').classList.add('open');
 }
 
@@ -1805,6 +1893,10 @@ function editTactic(idx) {
   document.getElementById('m-notes').value=t.notes||'';
   document.getElementById('m-startMonth').value = t.startMonth ?? 0;
   document.getElementById('m-endMonth').value = t.endMonth ?? 11;
+  document.getElementById('m-strategy').value = t.strategy || '';
+  document.getElementById('m-reason').value = t.reason || '';
+  document.getElementById('m-expected').value = t.expected || '';
+  document.getElementById('m-success').value = t.success || '';
   document.getElementById('tactic-modal').classList.add('open');
 }
 
@@ -1820,6 +1912,10 @@ function saveTactic() {
     notes:document.getElementById('m-notes').value.trim(),
     startMonth: parseInt(document.getElementById('m-startMonth').value),
     endMonth: parseInt(document.getElementById('m-endMonth').value),
+    strategy: document.getElementById('m-strategy').value,
+    reason: document.getElementById('m-reason').value.trim(),
+    expected: document.getElementById('m-expected').value.trim(),
+    success: document.getElementById('m-success').value.trim(),
   };
   if(!t.name){alert('施策名を入力してください');return;}
   if(editingTacticIdx!==null){
@@ -1831,6 +1927,7 @@ function saveTactic() {
   closeModal('tactic-modal');
   renderTactics();
   maybeRefreshRoadmap();
+  if (document.getElementById('tab-strategy').classList.contains('active')) renderStrategy();
   showToast(editingTacticIdx!==null?'施策を更新しました ✓':'施策を追加しました ✓');
 }
 
@@ -2137,14 +2234,170 @@ function renderRoadmap() {
 }
 
 // ============================================================
+// QUARTER THEMES
+// ============================================================
+const QUARTER_STORAGE_KEY = 'mjhn_fy2026_quarters';
+const DEFAULT_QUARTERS = [
+  {
+    label:'Q1', period:'4〜6月', icon:'🌸',
+    theme:'基盤整備・現状把握',
+    policy:'CPC急騰への即時対応と計測基盤を整える。GA4中間KPI設計・Meta時間帯最適化を優先実施。',
+    focus:'CPC対策・計測設計・クリエイティブ検証開始',
+    target:'CPA ¥150K以内・月次報告フォーマット刷新',
+    color:'#C8161D'
+  },
+  {
+    label:'Q2', period:'7〜9月', icon:'☀️',
+    theme:'検証・最適化',
+    policy:'Q1の検証結果をもとに勝ちパターンを特定。クリエイティブABテスト・ディスプレイ強化に注力。',
+    focus:'クリエイティブAB・背景変数テスト・GA4中間KPI活用',
+    target:'CPA ¥145K以内・ブランドリフト中間調査',
+    color:'#C8892A'
+  },
+  {
+    label:'Q3', period:'10〜12月', icon:'🍂',
+    theme:'拡張・認知投資',
+    policy:'Q2の勝ちパターンをスケール。DDA再検証・認知広告との連動計測を開始。冬閑散期を準備期間に充てる。',
+    focus:'DDA再検証・認知広告アシストCV計測・P-MAX精度向上',
+    target:'CPA ¥140K以内・新規リーチ率60%以上',
+    color:'#0F6E56'
+  },
+  {
+    label:'Q4', period:'1〜3月', icon:'❄️',
+    theme:'刈り取り・年度末繁忙',
+    policy:'新春繁忙期に向けて予算を集中投下。年間成果の総括とFY2027計画への橋渡しを行う。',
+    focus:'繁忙期重点配分・ブランドリフト年度末調査・次年度設計',
+    target:'CPA ¥130K以内・認知率+5pt達成',
+    color:'#534AB7'
+  },
+];
+
+function loadQuarters() {
+  try {
+    const q = JSON.parse(localStorage.getItem(QUARTER_STORAGE_KEY));
+    return q && q.length === 4 ? q : JSON.parse(JSON.stringify(DEFAULT_QUARTERS));
+  } catch(e) { return JSON.parse(JSON.stringify(DEFAULT_QUARTERS)); }
+}
+function saveQuartersState(q) { localStorage.setItem(QUARTER_STORAGE_KEY, JSON.stringify(q)); }
+
+let quarters = loadQuarters();
+
+function openQuarterEditModal() {
+  const container = document.getElementById('quarter-form-rows');
+  container.innerHTML = quarters.map((q, i) => `
+    <div style="border:1px solid var(--gray-200);border-radius:8px;padding:16px;margin-bottom:16px;border-left:4px solid ${q.color}">
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;">${q.icon} ${q.label}（${q.period}）</div>
+      <div class="form-group">
+        <label class="form-label">テーマ名</label>
+        <input type="text" class="form-input" id="q-theme-${i}" value="${q.theme}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">方針・アクション</label>
+        <textarea class="form-textarea" id="q-policy-${i}" style="min-height:60px;">${q.policy}</textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">注力施策</label>
+        <input type="text" class="form-input" id="q-focus-${i}" value="${q.focus}">
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">達成目標</label>
+        <input type="text" class="form-input" id="q-target-${i}" value="${q.target}">
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('quarter-modal').classList.add('open');
+}
+
+function saveQuarterThemes() {
+  quarters = quarters.map((q, i) => ({
+    ...q,
+    theme: document.getElementById(`q-theme-${i}`).value,
+    policy: document.getElementById(`q-policy-${i}`).value,
+    focus: document.getElementById(`q-focus-${i}`).value,
+    target: document.getElementById(`q-target-${i}`).value,
+  }));
+  saveQuartersState(quarters);
+  closeModal('quarter-modal');
+  renderStrategy();
+  showToast('四半期テーマを保存しました ✓');
+}
+
+// ============================================================
+// STRATEGY TAB RENDER
+// ============================================================
+function renderStrategy() {
+  renderQuarterCards();
+  renderStrategyMatrix();
+}
+
+function renderQuarterCards() {
+  const container = document.getElementById('quarter-cards');
+  if (!container) return;
+  container.innerHTML = quarters.map(q => `
+    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-top:5px solid ${q.color};position:relative;">
+      <div style="position:absolute;top:16px;right:16px;font-size:22px;">${q.icon}</div>
+      <div style="font-size:11px;font-weight:700;color:${q.color};letter-spacing:0.08em;margin-bottom:4px;">${q.label} | ${q.period}</div>
+      <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:12px;">${q.theme}</div>
+      <div style="font-size:11px;color:var(--gray-600);line-height:1.7;margin-bottom:12px;">${q.policy}</div>
+      <div style="font-size:10px;font-weight:700;color:var(--gray-500);margin-bottom:4px;">注力施策</div>
+      <div style="font-size:11px;color:var(--gray-700);margin-bottom:10px;">${q.focus}</div>
+      <div style="padding:8px 10px;background:${q.color}18;border-radius:6px;font-size:11px;color:${q.color};font-weight:600;">🎯 ${q.target}</div>
+    </div>
+  `).join('');
+}
+
+function renderStrategyMatrix() {
+  const container = document.getElementById('strategy-matrix');
+  if (!container) return;
+  const strategies = ['検索偏重の脱却','ディスプレイの拡大','反響の質の改善','横断'];
+  const strategyIcons = {'検索偏重の脱却':'🔍','ディスプレイの拡大':'📺','反響の質の改善':'⭐','横断':'🔄'};
+  const strategyColors = {'検索偏重の脱却':'#C8161D','ディスプレイの拡大':'#0F6E56','反響の質の改善':'#C8892A','横断':'#534AB7'};
+
+  container.innerHTML = strategies.map(s => {
+    const related = tactics.filter(t => t.strategy === s);
+    if (!related.length) return '';
+    return `
+      <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:14px;border-left:5px solid ${strategyColors[s]};">
+        <div style="font-size:13px;font-weight:700;color:${strategyColors[s]};margin-bottom:12px;">${strategyIcons[s]} ${s}</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          ${related.map(t => `
+            <div style="display:grid;grid-template-columns:160px 1fr 1fr 1fr;gap:12px;padding:10px;background:var(--gray-100);border-radius:6px;align-items:start;">
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--navy);">${t.name}</div>
+                <div style="margin-top:4px;"><span class="status-badge status-${t.status}">${t.status}</span></div>
+                <div style="font-size:10px;color:var(--gray-500);margin-top:4px;">${t.media} | ${t.timing}</div>
+              </div>
+              <div>
+                <div style="font-size:10px;font-weight:700;color:var(--gray-500);margin-bottom:3px;">なぜ今やるのか</div>
+                <div style="font-size:11px;color:var(--gray-700);line-height:1.5;">${t.reason || '—'}</div>
+              </div>
+              <div>
+                <div style="font-size:10px;font-weight:700;color:var(--gray-500);margin-bottom:3px;">検証後の想定効果</div>
+                <div style="font-size:11px;color:var(--gray-700);line-height:1.5;">${t.expected || '—'}</div>
+              </div>
+              <div>
+                <div style="font-size:10px;font-weight:700;color:var(--gray-500);margin-bottom:3px;">成功状態の定義</div>
+                <div style="font-size:11px;font-weight:600;color:${strategyColors[s]};line-height:1.5;">${t.success || t.kpi || '—'}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============================================================
 // RESET
 // ============================================================
 function resetData() {
   if(!confirm('全ての実績データとカスタム施策をリセットしますか？\n（この操作は元に戻せません）')) return;
   localStorage.removeItem(STORAGE_KEY);
   localStorage.removeItem(TACTICS_KEY);
+  localStorage.removeItem(QUARTER_STORAGE_KEY);
   state={};
   tactics=JSON.parse(JSON.stringify(DEFAULT_TACTICS));
+  quarters=JSON.parse(JSON.stringify(DEFAULT_QUARTERS));
   renderDashboard();
   showToast('データをリセットしました');
 }
@@ -2152,6 +2405,9 @@ function resetData() {
 // Close modal on overlay click
 document.getElementById('tactic-modal').addEventListener('click', function(e){
   if(e.target===this) closeModal('tactic-modal');
+});
+document.getElementById('quarter-modal').addEventListener('click', function(e){
+  if(e.target===this) closeModal('quarter-modal');
 });
 
 // ============================================================
