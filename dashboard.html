@@ -825,6 +825,13 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
   </div>
   <div id="strategy-matrix"></div>
 
+  <!-- Per-medium operation policy -->
+  <div class="flex-between" style="margin-top:32px;margin-bottom:16px;">
+    <div class="section-title">媒体別 FY2026 運用方針</div>
+    <button class="btn-secondary" onclick="openMediaPolicyModal()">✎ 運用方針を編集</button>
+  </div>
+  <div id="media-policy-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;"></div>
+
 </div>
 
 <!-- ===== TAB 1: DASHBOARD ===== -->
@@ -887,6 +894,23 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
     </div>
     <svg id="chart-cv-monthly" width="100%" height="200" viewBox="0 0 900 200"></svg>
     <div style="font-size:11px;color:var(--gray-500);margin-top:8px;">※ 実績未入力月は目標値のみ表示。実績がある月は目標との差（Gap）を表示。</div>
+  </div>
+
+  <!-- Cumulative CV achievement path chart -->
+  <div class="chart-card mb-6">
+    <div class="flex-between mb-4">
+      <div>
+        <div class="chart-title">年間累積反響 達成パス</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-top:2px;">目標ペースライン vs 実績累積 — ビハインドを可視化</div>
+      </div>
+      <div id="behind-badge" style="padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;background:var(--gray-200);color:var(--gray-600);">データ入力待ち</div>
+    </div>
+    <svg id="chart-cumulative-cv" width="100%" height="220" viewBox="0 0 900 220"></svg>
+    <div style="display:flex;gap:20px;margin-top:10px;font-size:11px;color:var(--gray-600);">
+      <div style="display:flex;align-items:center;gap:5px;"><div style="width:24px;height:3px;background:#DEE2E6;border-top:2px dashed #6C757D;"></div> 目標累積ペース</div>
+      <div style="display:flex;align-items:center;gap:5px;"><div style="width:24px;height:3px;background:#C8161D;border-radius:2px;"></div> 実績累積</div>
+      <div style="display:flex;align-items:center;gap:5px;"><div style="width:12px;height:12px;background:#FDECEA;border:1px solid #C8161D;border-radius:2px;"></div> ビハインドゾーン</div>
+    </div>
   </div>
 
 </div>
@@ -969,6 +993,18 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
     <div class="modal-actions">
       <button class="btn-secondary" onclick="closeModal('quarter-modal')">キャンセル</button>
       <button class="btn-primary" onclick="saveQuarterThemes()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Media Policy Edit -->
+<div class="modal-overlay" id="media-policy-modal">
+  <div class="modal" style="width:700px;">
+    <div class="modal-title">媒体別 運用方針を編集</div>
+    <div id="media-policy-form-rows"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('media-policy-modal')">キャンセル</button>
+      <button class="btn-primary" onclick="saveMediaPolicies()">保存</button>
     </div>
   </div>
 </div>
@@ -1233,6 +1269,7 @@ function renderDashboard() {
   renderMonthlyBudgetChart();
   renderDonutChart();
   renderCVChart();
+  renderCumulativeCVChart();
 }
 
 function renderKPIs() {
@@ -1675,6 +1712,7 @@ function saveActuals() {
   saveState(state);
   updateLastUpdated();
   renderKPIs();
+  renderCumulativeCVChart();
   showToast('実績データを保存しました ✓');
 }
 
@@ -2323,11 +2361,80 @@ function saveQuarterThemes() {
 }
 
 // ============================================================
+// MEDIA POLICY
+// ============================================================
+const MEDIA_POLICY_KEY = 'mjhn_fy2026_media_policy';
+const DEFAULT_MEDIA_POLICIES = [
+  { media:'Google検索', icon:'🔍', policy:'DDAを活用したCPA最小化を最優先。CPC高騰対応として除外KW・マッチタイプ最適化を継続。夏季は検証期間とし、秋以降に拡大投資。', goal:'年間CPA ¥140K以内', color:'#4285F4' },
+  { media:'P-MAX', icon:'🤖', policy:'検索テーマの精度向上とアセット刷新が主レバー。動画面・ディスプレイ面の配信割合を改善し、検索補完媒体として安定稼働させる。', goal:'CPA ¥145K以内で通年維持', color:'#34A853' },
+  { media:'Yahoo!検索', icon:'🟥', policy:'CPA安定・ボリューム拡大余地あり。クエリ精査を継続しながら予算増を検討。Google検索との役割分担を明確化。', goal:'CPA ¥130K以内・CV拡大', color:'#FF0033' },
+  { media:'Meta', icon:'📘', policy:'時間帯・曜日最適化を即実施。クリエイティブABテストで勝ちパターン特定後にスケール。ディスプレイ拡大の主軸媒体として位置づける。', goal:'新規リーチ率60%以上・CPA ¥130K以内', color:'#1877F2' },
+  { media:'GDN', icon:'🖥', policy:'リターゲティング継続＋GA4中間KPI活用で質的改善。検索前段階のユーザーへのリーチ強化。ターゲット検証（55歳以上→35〜54歳拡張）を夏までに完了。', goal:'ディスプレイCV比率25%以上', color:'#FBBC04' },
+  { media:'YDA', icon:'🟧', policy:'バナークリエイティブ3ヶ月ごと刷新で鮮度維持。GDNとの役割補完でリーチ最大化を図る。', goal:'安定CPA維持・クリエイティブ刷新', color:'#FF6900' },
+];
+
+function loadMediaPolicies() {
+  try {
+    const p = JSON.parse(localStorage.getItem(MEDIA_POLICY_KEY));
+    return p && p.length ? p : JSON.parse(JSON.stringify(DEFAULT_MEDIA_POLICIES));
+  } catch(e) { return JSON.parse(JSON.stringify(DEFAULT_MEDIA_POLICIES)); }
+}
+function saveMediaPoliciesState(p) { localStorage.setItem(MEDIA_POLICY_KEY, JSON.stringify(p)); }
+
+let mediaPolicies = loadMediaPolicies();
+
+function renderMediaPolicyGrid() {
+  const container = document.getElementById('media-policy-grid');
+  if (!container) return;
+  container.innerHTML = mediaPolicies.map(p => `
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08);border-top:4px solid ${p.color};">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <span style="font-size:18px;">${p.icon}</span>
+        <span style="font-size:13px;font-weight:700;color:var(--navy);">${p.media}</span>
+      </div>
+      <div style="font-size:11px;color:var(--gray-600);line-height:1.7;margin-bottom:10px;">${p.policy}</div>
+      <div style="padding:7px 10px;background:${p.color}18;border-radius:6px;font-size:11px;color:${p.color};font-weight:600;">🎯 ${p.goal}</div>
+    </div>
+  `).join('');
+}
+
+function openMediaPolicyModal() {
+  const container = document.getElementById('media-policy-form-rows');
+  container.innerHTML = mediaPolicies.map((p, i) => `
+    <div style="border:1px solid var(--gray-200);border-radius:8px;padding:14px;margin-bottom:12px;border-left:4px solid ${p.color};">
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:10px;">${p.icon} ${p.media}</div>
+      <div class="form-group">
+        <label class="form-label">運用方針</label>
+        <textarea class="form-textarea" id="mp-policy-${i}" style="min-height:70px;">${p.policy}</textarea>
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">FY2026 目標状態</label>
+        <input type="text" class="form-input" id="mp-goal-${i}" value="${p.goal}">
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('media-policy-modal').classList.add('open');
+}
+
+function saveMediaPolicies() {
+  mediaPolicies = mediaPolicies.map((p, i) => ({
+    ...p,
+    policy: document.getElementById(`mp-policy-${i}`).value,
+    goal: document.getElementById(`mp-goal-${i}`).value,
+  }));
+  saveMediaPoliciesState(mediaPolicies);
+  closeModal('media-policy-modal');
+  renderMediaPolicyGrid();
+  showToast('運用方針を保存しました ✓');
+}
+
+// ============================================================
 // STRATEGY TAB RENDER
 // ============================================================
 function renderStrategy() {
   renderQuarterCards();
   renderStrategyMatrix();
+  renderMediaPolicyGrid();
 }
 
 function renderQuarterCards() {
@@ -2395,9 +2502,11 @@ function resetData() {
   localStorage.removeItem(STORAGE_KEY);
   localStorage.removeItem(TACTICS_KEY);
   localStorage.removeItem(QUARTER_STORAGE_KEY);
+  localStorage.removeItem(MEDIA_POLICY_KEY);
   state={};
   tactics=JSON.parse(JSON.stringify(DEFAULT_TACTICS));
   quarters=JSON.parse(JSON.stringify(DEFAULT_QUARTERS));
+  mediaPolicies = JSON.parse(JSON.stringify(DEFAULT_MEDIA_POLICIES));
   renderDashboard();
   showToast('データをリセットしました');
 }
@@ -2408,6 +2517,9 @@ document.getElementById('tactic-modal').addEventListener('click', function(e){
 });
 document.getElementById('quarter-modal').addEventListener('click', function(e){
   if(e.target===this) closeModal('quarter-modal');
+});
+document.getElementById('media-policy-modal').addEventListener('click', function(e){
+  if(e.target===this) closeModal('media-policy-modal');
 });
 
 // ============================================================
