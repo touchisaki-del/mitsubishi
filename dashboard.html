@@ -788,29 +788,11 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
 <div id="tab-strategy" class="tab-panel">
 
   <!-- 3 Strategic Pillars -->
-  <div class="section-header">
+  <div class="flex-between" style="margin-bottom:16px;">
     <div class="section-title">FY2026 全体戦略 3本柱</div>
+    <button class="btn-primary" onclick="openPillarEditModal()">✎ 3本柱を編集</button>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
-    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-top:5px solid #C8161D;">
-      <div style="font-size:24px;margin-bottom:8px;">🔍</div>
-      <div style="font-size:15px;font-weight:700;color:#1A1A2E;margin-bottom:8px;">検索偏重の脱却</div>
-      <div style="font-size:12px;color:#6C757D;line-height:1.7;">CPC高騰・AIO影響で検索単独依存はリスク大。Meta・ディスプレイへの分散投資で安定したCV獲得構造を構築する。</div>
-      <div style="margin-top:12px;padding:8px 12px;background:#FDECEA;border-radius:6px;font-size:11px;color:#C8161D;font-weight:600;">成功状態：検索依存率 60%以下</div>
-    </div>
-    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-top:5px solid #0F6E56;">
-      <div style="font-size:24px;margin-bottom:8px;">📺</div>
-      <div style="font-size:15px;font-weight:700;color:#1A1A2E;margin-bottom:8px;">ディスプレイの拡大</div>
-      <div style="font-size:12px;color:#6C757D;line-height:1.7;">GDN・YDA・MetaのASC活用で潜在層へのリーチを拡大。検索前段階での認知醸成がCPC低減につながる。</div>
-      <div style="margin-top:12px;padding:8px 12px;background:#E8F8F5;border-radius:6px;font-size:11px;color:#0F6E56;font-weight:600;">成功状態：ディスプレイCV比率 25%以上</div>
-    </div>
-    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-top:5px solid #C8892A;">
-      <div style="font-size:24px;margin-bottom:8px;">⭐</div>
-      <div style="font-size:15px;font-weight:700;color:#1A1A2E;margin-bottom:8px;">反響の質の改善</div>
-      <div style="font-size:12px;color:#6C757D;line-height:1.7;">件数だけでなく成約率・手数料単価をKPIに追加。エリア×種別でターゲット精度を上げ、高単価案件の割合を高める。</div>
-      <div style="margin-top:12px;padding:8px 12px;background:#FEF3C7;border-radius:6px;font-size:11px;color:#C8892A;font-weight:600;">成功状態：成約率・単価の前年比改善</div>
-    </div>
-  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;" id="pillar-cards"></div>
 
   <!-- Quarterly Themes -->
   <div class="flex-between" style="margin-bottom:16px;">
@@ -993,6 +975,18 @@ input.actual-input:focus { outline: none; border-color: var(--blue); box-shadow:
     <div class="modal-actions">
       <button class="btn-secondary" onclick="closeModal('quarter-modal')">キャンセル</button>
       <button class="btn-primary" onclick="saveQuarterThemes()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Pillar Edit -->
+<div class="modal-overlay" id="pillar-modal">
+  <div class="modal" style="width:680px;">
+    <div class="modal-title">FY2026 全体戦略 3本柱を編集</div>
+    <div id="pillar-form-rows"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal('pillar-modal')">キャンセル</button>
+      <button class="btn-primary" onclick="savePillars()">保存</button>
     </div>
   </div>
 </div>
@@ -2410,6 +2404,70 @@ function renderRoadmap() {
 // QUARTER THEMES
 // ============================================================
 const QUARTER_STORAGE_KEY = 'mjhn_fy2026_quarters';
+const PILLAR_STORAGE_KEY = 'mjhn_fy2026_pillars';
+const DEFAULT_PILLARS = [
+  { icon:'🔍', title:'検索偏重の脱却', description:'', success:'', color:'#C8161D', bg:'#FDECEA' },
+  { icon:'📺', title:'ディスプレイの拡大', description:'', success:'', color:'#0F6E56', bg:'#E8F8F5' },
+  { icon:'⭐', title:'反響の質の改善', description:'', success:'', color:'#C8892A', bg:'#FEF3C7' },
+];
+
+function loadPillars() {
+  try {
+    const p = JSON.parse(localStorage.getItem(PILLAR_STORAGE_KEY));
+    return p && p.length === 3 ? p : JSON.parse(JSON.stringify(DEFAULT_PILLARS));
+  } catch(e) { return JSON.parse(JSON.stringify(DEFAULT_PILLARS)); }
+}
+function savePillarsState(p) { localStorage.setItem(PILLAR_STORAGE_KEY, JSON.stringify(p)); }
+
+let pillars = loadPillars();
+
+function openPillarEditModal() {
+  const container = document.getElementById('pillar-form-rows');
+  container.innerHTML = pillars.map((p, i) => `
+    <div style="border:1px solid var(--gray-200);border-radius:8px;padding:16px;margin-bottom:16px;border-left:4px solid ${p.color}">
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;">${p.icon} 柱${i+1}</div>
+      <div class="form-group">
+        <label class="form-label">タイトル</label>
+        <input type="text" class="form-input" id="p-title-${i}" value="${p.title}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">説明・背景</label>
+        <textarea class="form-textarea" id="p-desc-${i}" style="min-height:60px;">${p.description}</textarea>
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">成功状態の定義</label>
+        <input type="text" class="form-input" id="p-success-${i}" value="${p.success}">
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('pillar-modal').classList.add('open');
+}
+
+function savePillars() {
+  pillars = pillars.map((p, i) => ({
+    ...p,
+    title: document.getElementById(`p-title-${i}`).value,
+    description: document.getElementById(`p-desc-${i}`).value,
+    success: document.getElementById(`p-success-${i}`).value,
+  }));
+  savePillarsState(pillars);
+  renderPillars();
+  closeModal('pillar-modal');
+}
+
+function renderPillars() {
+  const container = document.getElementById('pillar-cards');
+  if (!container) return;
+  container.innerHTML = pillars.map(p => `
+    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-top:5px solid ${p.color};">
+      <div style="font-size:24px;margin-bottom:8px;">${p.icon}</div>
+      <div style="font-size:15px;font-weight:700;color:${p.title ? '#1A1A2E' : 'var(--gray-400)'};margin-bottom:8px;">${p.title || '（未入力）'}</div>
+      <div style="font-size:12px;color:#6C757D;line-height:1.7;">${p.description || '<span style="color:var(--gray-400);font-style:italic;">説明・背景を入力してください</span>'}</div>
+      <div style="margin-top:12px;padding:8px 12px;background:${p.bg};border-radius:6px;font-size:11px;color:${p.success ? p.color : 'var(--gray-400)'};font-weight:600;">${p.success ? '成功状態：' + p.success : '成功状態を入力してください'}</div>
+    </div>
+  `).join('');
+}
+
 const DEFAULT_QUARTERS = [
   {
     label:'Q1', period:'4〜6月', icon:'🌸',
@@ -2567,6 +2625,7 @@ function saveMediaPolicies() {
 // STRATEGY TAB RENDER
 // ============================================================
 function renderStrategy() {
+  renderPillars();
   renderQuarterCards();
   renderStrategyMatrix();
   renderMediaPolicyGrid();
@@ -2638,9 +2697,11 @@ function resetData() {
   localStorage.removeItem(TACTICS_KEY);
   localStorage.removeItem(QUARTER_STORAGE_KEY);
   localStorage.removeItem(MEDIA_POLICY_KEY);
+  localStorage.removeItem(PILLAR_STORAGE_KEY);
   state={};
   tactics=JSON.parse(JSON.stringify(DEFAULT_TACTICS));
   quarters=JSON.parse(JSON.stringify(DEFAULT_QUARTERS));
+  pillars=JSON.parse(JSON.stringify(DEFAULT_PILLARS));
   mediaPolicies = JSON.parse(JSON.stringify(DEFAULT_MEDIA_POLICIES));
   renderDashboard();
   showToast('データをリセットしました');
@@ -2655,6 +2716,9 @@ document.getElementById('quarter-modal').addEventListener('click', function(e){
 });
 document.getElementById('media-policy-modal').addEventListener('click', function(e){
   if(e.target===this) closeModal('media-policy-modal');
+});
+document.getElementById('pillar-modal').addEventListener('click', function(e){
+  if(e.target===this) closeModal('pillar-modal');
 });
 
 // ============================================================
