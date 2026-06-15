@@ -2413,34 +2413,34 @@ const QUARTER_STORAGE_KEY = 'mjhn_fy2026_quarters';
 const DEFAULT_QUARTERS = [
   {
     label:'Q1', period:'4〜6月', icon:'🌸',
-    theme:'基盤整備・現状把握',
-    policy:'CPC急騰への即時対応と計測基盤を整える。GA4中間KPI設計・Meta時間帯最適化を優先実施。',
-    focus:'CPC対策・計測設計・クリエイティブ検証開始',
-    target:'CPA ¥150K以内・月次報告フォーマット刷新',
+    theme:'',
+    policy:'',
+    focus:'',
+    target:'',
     color:'#C8161D'
   },
   {
     label:'Q2', period:'7〜9月', icon:'☀️',
-    theme:'検証・最適化',
-    policy:'Q1の検証結果をもとに勝ちパターンを特定。クリエイティブABテスト・ディスプレイ強化に注力。',
-    focus:'クリエイティブAB・背景変数テスト・GA4中間KPI活用',
-    target:'CPA ¥145K以内・ブランドリフト中間調査',
+    theme:'',
+    policy:'',
+    focus:'',
+    target:'',
     color:'#C8892A'
   },
   {
     label:'Q3', period:'10〜12月', icon:'🍂',
-    theme:'拡張・認知投資',
-    policy:'Q2の勝ちパターンをスケール。DDA再検証・認知広告との連動計測を開始。冬閑散期を準備期間に充てる。',
-    focus:'DDA再検証・認知広告アシストCV計測・P-MAX精度向上',
-    target:'CPA ¥140K以内・新規リーチ率60%以上',
+    theme:'',
+    policy:'',
+    focus:'',
+    target:'',
     color:'#0F6E56'
   },
   {
     label:'Q4', period:'1〜3月', icon:'❄️',
-    theme:'刈り取り・年度末繁忙',
-    policy:'新春繁忙期に向けて予算を集中投下。年間成果の総括とFY2027計画への橋渡しを行う。',
-    focus:'繁忙期重点配分・ブランドリフト年度末調査・次年度設計',
-    target:'CPA ¥130K以内・認知率+5pt達成',
+    theme:'',
+    policy:'',
+    focus:'',
+    target:'',
     color:'#534AB7'
   },
 ];
@@ -2579,11 +2579,11 @@ function renderQuarterCards() {
     <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-top:5px solid ${q.color};position:relative;">
       <div style="position:absolute;top:16px;right:16px;font-size:22px;">${q.icon}</div>
       <div style="font-size:11px;font-weight:700;color:${q.color};letter-spacing:0.08em;margin-bottom:4px;">${q.label} | ${q.period}</div>
-      <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:12px;">${q.theme}</div>
-      <div style="font-size:11px;color:var(--gray-600);line-height:1.7;margin-bottom:12px;">${q.policy}</div>
+      <div style="font-size:16px;font-weight:700;color:${q.theme ? 'var(--navy)' : 'var(--gray-400)'};margin-bottom:12px;">${q.theme || '（未入力）'}</div>
+      <div style="font-size:11px;color:var(--gray-600);line-height:1.7;margin-bottom:12px;">${q.policy || '<span style="color:var(--gray-400);font-style:italic;">方針・アクションを入力してください</span>'}</div>
       <div style="font-size:10px;font-weight:700;color:var(--gray-500);margin-bottom:4px;">注力施策</div>
-      <div style="font-size:11px;color:var(--gray-700);margin-bottom:10px;">${q.focus}</div>
-      <div style="padding:8px 10px;background:${q.color}18;border-radius:6px;font-size:11px;color:${q.color};font-weight:600;">🎯 ${q.target}</div>
+      <div style="font-size:11px;color:${q.focus ? 'var(--gray-700)' : 'var(--gray-400)'};margin-bottom:10px;">${q.focus || '—'}</div>
+      <div style="padding:8px 10px;background:${q.color}18;border-radius:6px;font-size:11px;color:${q.target ? q.color : 'var(--gray-400)'};font-weight:600;">${q.target ? '🎯 ' + q.target : '達成目標を入力してください'}</div>
     </div>
   `).join('');
 }
