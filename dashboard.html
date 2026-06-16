@@ -2462,8 +2462,8 @@ function renderPillars() {
     <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-top:5px solid ${p.color};">
       <div style="font-size:24px;margin-bottom:8px;">${p.icon}</div>
       <div style="font-size:15px;font-weight:700;color:${p.title ? '#1A1A2E' : 'var(--gray-400)'};margin-bottom:8px;">${p.title || '（未入力）'}</div>
-      <div style="font-size:12px;color:#6C757D;line-height:1.7;">${p.description || '<span style="color:var(--gray-400);font-style:italic;">説明・背景を入力してください</span>'}</div>
-      <div style="margin-top:12px;padding:8px 12px;background:${p.bg};border-radius:6px;font-size:11px;color:${p.success ? p.color : 'var(--gray-400)'};font-weight:600;">${p.success ? '成功状態：' + p.success : '成功状態を入力してください'}</div>
+      <div style="font-size:12px;color:#6C757D;line-height:1.7;white-space:pre-wrap;">${p.description || '<span style="color:var(--gray-400);font-style:italic;">説明・背景を入力してください</span>'}</div>
+      <div style="margin-top:12px;padding:8px 12px;background:${p.bg};border-radius:6px;font-size:11px;color:${p.success ? p.color : 'var(--gray-400)'};font-weight:600;white-space:pre-wrap;">${p.success ? '成功状態：' + p.success : '成功状態を入力してください'}</div>
     </div>
   `).join('');
 }
@@ -2639,7 +2639,7 @@ function renderQuarterCards() {
       <div style="position:absolute;top:16px;right:16px;font-size:22px;">${q.icon}</div>
       <div style="font-size:11px;font-weight:700;color:${q.color};letter-spacing:0.08em;margin-bottom:4px;">${q.label} | ${q.period}</div>
       <div style="font-size:16px;font-weight:700;color:${q.theme ? 'var(--navy)' : 'var(--gray-400)'};margin-bottom:12px;">${q.theme || '（未入力）'}</div>
-      <div style="font-size:11px;color:var(--gray-600);line-height:1.7;margin-bottom:12px;">${q.policy || '<span style="color:var(--gray-400);font-style:italic;">方針・アクションを入力してください</span>'}</div>
+      <div style="font-size:11px;color:var(--gray-600);line-height:1.7;margin-bottom:12px;white-space:pre-wrap;">${q.policy || '<span style="color:var(--gray-400);font-style:italic;">方針・アクションを入力してください</span>'}</div>
       <div style="font-size:10px;font-weight:700;color:var(--gray-500);margin-bottom:4px;">注力施策</div>
       <div style="font-size:11px;color:${q.focus ? 'var(--gray-700)' : 'var(--gray-400)'};margin-bottom:10px;">${q.focus || '—'}</div>
       <div style="padding:8px 10px;background:${q.color}18;border-radius:6px;font-size:11px;color:${q.target ? q.color : 'var(--gray-400)'};font-weight:600;">${q.target ? '🎯 ' + q.target : '達成目標を入力してください'}</div>
